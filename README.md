@@ -1,4 +1,4 @@
-# Datj (High-end Computer and Gear Shop)
+# Datj_Website (High-end Computer and Gear Shop)
 * Clone project
 * Run database script (asset/script_database/db_nganhang.sql) in MYSQL
 * Create virtualenv venv
