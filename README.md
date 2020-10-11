@@ -7,7 +7,7 @@
 * run project (py manage.py runserver)
 
 ## Giới thiệu đề tài: 
-  - 
+  - Hệ thống website bán các thiết bị phần cứng, linh kiện cho máy tính và các đồ dùng công nghệ online và có thể mở rộng để bán được nhiều mặt hàng khác.
   - Công nghệ sử dụng trong đề tài: Django framework (Python), MySQL Database
   
 ## Danh sách thành viên:
