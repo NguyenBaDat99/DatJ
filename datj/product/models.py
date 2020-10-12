@@ -25,7 +25,8 @@ class Product(models.Model):
     manufacturers = models.ForeignKey(Manufacturers, null=True, blank=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=50)
     price = models.FloatField(blank=True, null=True, default=0)
-    quantity = models.IntegerField(blank=True, null=True, default=0)
+    unit_in_stock = models.IntegerField(blank=True, null=True, default=0)
+    unit_in_order = models.IntegerField(blank=True, null=True, default=0)
     active = models.BooleanField(default=True)
     description = models.CharField(default=None, blank=True, null=True, max_length=300)
 
