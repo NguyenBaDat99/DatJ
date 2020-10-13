@@ -4,3 +4,5 @@ mysqlclient @ file:///F:/Documents/PythonProject/DatJ/mysqlclient-1.4.6-cp38-cp3
 product==0.1.1.1
 pytz==2020.1
 sqlparse==0.4.1
+
+djangorestframework~=3.12.1

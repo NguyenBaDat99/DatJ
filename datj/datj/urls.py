@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from product.views import *
 
 urlpatterns = [
     path('product/', include('product.urls')),
+    path('product/get-all/', GetAllProductAPIView.as_view()),
+    path('product/category/add/', AddCategoryAPIView.as_view()),
     path('order/', include('order.urls')),
     path('customer/', include('customer.urls')),
     path('admin/', admin.site.urls),

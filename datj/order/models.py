@@ -47,7 +47,7 @@ class Order(models.Model):
     description = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return self.customer + "-Order-" + self.order_date
+        return "Order-" + str(self.pk) + "-" + str(self.customer) + "-" + self.order_date.strftime("%m/%d/%Y, %H:%M:%S")
 
 
 class OrderDetail(models.Model):
