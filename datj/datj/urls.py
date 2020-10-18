@@ -19,7 +19,13 @@ from product.views import *
 
 urlpatterns = [
     path('product/', include('product.urls')),
-    path('product/get-all/', GetAllProductAPIView.as_view()),
+    path('product/get/', GetProductAPIView.as_view()),
+    path('product/category/get/', GetCategoryAPIView.as_view()),
+    path('product/manufacturers/get/', GetManufacturersAPIView.as_view()),
+    path('product/product-attribute/get/', GetProAttributeAPIView.as_view()),
+    path('product/product-attribute-value/get/', GetProAttributeValueAPIView.as_view()),
+    path('product/discount/get/', GetDiscountAPIView.as_view()),
+    path('product/discount-item/get/', GetDiscountItemAPIView.as_view()),
     path('product/category/add/', AddCategoryAPIView.as_view()),
     path('order/', include('order.urls')),
     path('customer/', include('customer.urls')),
