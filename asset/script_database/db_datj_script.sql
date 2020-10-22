@@ -86,7 +86,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `auth_permission` (
 
 LOCK TABLES `auth_permission` WRITE;
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add discount',7,'add_discount'),(26,'Can change discount',7,'change_discount'),(27,'Can delete discount',7,'delete_discount'),(28,'Can view discount',7,'view_discount'),(29,'Can add product attribute',8,'add_productattribute'),(30,'Can change product attribute',8,'change_productattribute'),(31,'Can delete product attribute',8,'delete_productattribute'),(32,'Can view product attribute',8,'view_productattribute'),(33,'Can add category',9,'add_category'),(34,'Can change category',9,'change_category'),(35,'Can delete category',9,'delete_category'),(36,'Can view category',9,'view_category'),(37,'Can add product attribute value',10,'add_productattributevalue'),(38,'Can change product attribute value',10,'change_productattributevalue'),(39,'Can delete product attribute value',10,'delete_productattributevalue'),(40,'Can view product attribute value',10,'view_productattributevalue'),(41,'Can add manufacturers',11,'add_manufacturers'),(42,'Can change manufacturers',11,'change_manufacturers'),(43,'Can delete manufacturers',11,'delete_manufacturers'),(44,'Can view manufacturers',11,'view_manufacturers'),(45,'Can add discount item',12,'add_discountitem'),(46,'Can change discount item',12,'change_discountitem'),(47,'Can delete discount item',12,'delete_discountitem'),(48,'Can view discount item',12,'view_discountitem'),(49,'Can add product',13,'add_product'),(50,'Can change product',13,'change_product'),(51,'Can delete product',13,'delete_product'),(52,'Can view product',13,'view_product'),(53,'Can add payment service',14,'add_paymentservice'),(54,'Can change payment service',14,'change_paymentservice'),(55,'Can delete payment service',14,'delete_paymentservice'),(56,'Can view payment service',14,'view_paymentservice'),(57,'Can add order detail',15,'add_orderdetail'),(58,'Can change order detail',15,'change_orderdetail'),(59,'Can delete order detail',15,'delete_orderdetail'),(60,'Can view order detail',15,'view_orderdetail'),(61,'Can add cart item',16,'add_cartitem'),(62,'Can change cart item',16,'change_cartitem'),(63,'Can delete cart item',16,'delete_cartitem'),(64,'Can view cart item',16,'view_cartitem'),(65,'Can add cart',17,'add_cart'),(66,'Can change cart',17,'change_cart'),(67,'Can delete cart',17,'delete_cart'),(68,'Can view cart',17,'view_cart'),(69,'Can add order',18,'add_order'),(70,'Can change order',18,'change_order'),(71,'Can delete order',18,'delete_order'),(72,'Can view order',18,'view_order'),(73,'Can add ship service',19,'add_shipservice'),(74,'Can change ship service',19,'change_shipservice'),(75,'Can delete ship service',19,'delete_shipservice'),(76,'Can view ship service',19,'view_shipservice'),(77,'Can add customer',20,'add_customer'),(78,'Can change customer',20,'change_customer'),(79,'Can delete customer',20,'delete_customer'),(80,'Can view customer',20,'view_customer'),(81,'Can add tel number',21,'add_telnumber'),(82,'Can change tel number',21,'change_telnumber'),(83,'Can delete tel number',21,'delete_telnumber'),(84,'Can view tel number',21,'view_telnumber'),(85,'Can add ship address',22,'add_shipaddress'),(86,'Can change ship address',22,'change_shipaddress'),(87,'Can delete ship address',22,'delete_shipaddress'),(88,'Can view ship address',22,'view_shipaddress');
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add discount',7,'add_discount'),(26,'Can change discount',7,'change_discount'),(27,'Can delete discount',7,'delete_discount'),(28,'Can view discount',7,'view_discount'),(29,'Can add product attribute',8,'add_productattribute'),(30,'Can change product attribute',8,'change_productattribute'),(31,'Can delete product attribute',8,'delete_productattribute'),(32,'Can view product attribute',8,'view_productattribute'),(33,'Can add category',9,'add_category'),(34,'Can change category',9,'change_category'),(35,'Can delete category',9,'delete_category'),(36,'Can view category',9,'view_category'),(37,'Can add product attribute value',10,'add_productattributevalue'),(38,'Can change product attribute value',10,'change_productattributevalue'),(39,'Can delete product attribute value',10,'delete_productattributevalue'),(40,'Can view product attribute value',10,'view_productattributevalue'),(41,'Can add manufacturers',11,'add_manufacturers'),(42,'Can change manufacturers',11,'change_manufacturers'),(43,'Can delete manufacturers',11,'delete_manufacturers'),(44,'Can view manufacturers',11,'view_manufacturers'),(45,'Can add discount item',12,'add_discountitem'),(46,'Can change discount item',12,'change_discountitem'),(47,'Can delete discount item',12,'delete_discountitem'),(48,'Can view discount item',12,'view_discountitem'),(49,'Can add product',13,'add_product'),(50,'Can change product',13,'change_product'),(51,'Can delete product',13,'delete_product'),(52,'Can view product',13,'view_product'),(53,'Can add payment service',14,'add_paymentservice'),(54,'Can change payment service',14,'change_paymentservice'),(55,'Can delete payment service',14,'delete_paymentservice'),(56,'Can view payment service',14,'view_paymentservice'),(57,'Can add order detail',15,'add_orderdetail'),(58,'Can change order detail',15,'change_orderdetail'),(59,'Can delete order detail',15,'delete_orderdetail'),(60,'Can view order detail',15,'view_orderdetail'),(61,'Can add cart item',16,'add_cartitem'),(62,'Can change cart item',16,'change_cartitem'),(63,'Can delete cart item',16,'delete_cartitem'),(64,'Can view cart item',16,'view_cartitem'),(65,'Can add cart',17,'add_cart'),(66,'Can change cart',17,'change_cart'),(67,'Can delete cart',17,'delete_cart'),(68,'Can view cart',17,'view_cart'),(69,'Can add order',18,'add_order'),(70,'Can change order',18,'change_order'),(71,'Can delete order',18,'delete_order'),(72,'Can view order',18,'view_order'),(73,'Can add ship service',19,'add_shipservice'),(74,'Can change ship service',19,'change_shipservice'),(75,'Can delete ship service',19,'delete_shipservice'),(76,'Can view ship service',19,'view_shipservice'),(77,'Can add customer',20,'add_customer'),(78,'Can change customer',20,'change_customer'),(79,'Can delete customer',20,'delete_customer'),(80,'Can view customer',20,'view_customer'),(81,'Can add tel number',21,'add_telnumber'),(82,'Can change tel number',21,'change_telnumber'),(83,'Can delete tel number',21,'delete_telnumber'),(84,'Can view tel number',21,'view_telnumber'),(85,'Can add ship address',22,'add_shipaddress'),(86,'Can change ship address',22,'change_shipaddress'),(87,'Can delete ship address',22,'delete_shipaddress'),(88,'Can view ship address',22,'view_shipaddress'),(89,'Can add manufacturer',11,'add_manufacturer'),(90,'Can change manufacturer',11,'change_manufacturer'),(91,'Can delete manufacturer',11,'delete_manufacturer'),(92,'Can view manufacturer',11,'view_manufacturer'),(93,'Can add Token',23,'add_token'),(94,'Can change Token',23,'change_token'),(95,'Can delete Token',23,'delete_token'),(96,'Can view Token',23,'view_token'),(97,'Can add token',24,'add_tokenproxy'),(98,'Can change token',24,'change_tokenproxy'),(99,'Can delete token',24,'delete_tokenproxy'),(100,'Can view token',24,'view_tokenproxy');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +129,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$216000$9ONlHM8W4Fjv$hmqQYZEWs1Gll9Nw/jX+6Yg/GNSma3LCDNI2QFOx6hU=','2020-10-13 14:21:28.000000',0,'admin','','','datzach31@gmail.com',1,1,'2020-10-10 17:32:59.000000'),(2,'pbkdf2_sha256$216000$6HW5gPENutmv$WaLVuuJwttPyB3KnF/sogGgiSCF+h3gB8EqtzykIU0g=','2020-10-13 14:21:18.721031',0,'nbdat22','','','',1,1,'2020-10-13 04:02:29.000000');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$216000$9ONlHM8W4Fjv$hmqQYZEWs1Gll9Nw/jX+6Yg/GNSma3LCDNI2QFOx6hU=','2020-10-21 15:15:50.444993',0,'admin','','','datzach31@gmail.com',1,1,'2020-10-10 17:32:59.000000'),(2,'pbkdf2_sha256$216000$6HW5gPENutmv$WaLVuuJwttPyB3KnF/sogGgiSCF+h3gB8EqtzykIU0g=','2020-10-13 14:21:18.721031',0,'nbdat22','','','',1,1,'2020-10-13 04:02:29.000000');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,6 +191,33 @@ LOCK TABLES `auth_user_user_permissions` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `authtoken_token`
+--
+
+DROP TABLE IF EXISTS `authtoken_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `authtoken_token` (
+  `key` varchar(40) NOT NULL,
+  `created` datetime(6) NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`key`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `authtoken_token_user_id_35299eff_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `authtoken_token`
+--
+
+LOCK TABLES `authtoken_token` WRITE;
+/*!40000 ALTER TABLE `authtoken_token` DISABLE KEYS */;
+INSERT INTO `authtoken_token` VALUES ('26d5035e32d525ce261cbbbb6725cf5f407941d3','2020-10-21 15:17:39.622950',1),('f2631003193eabb6b6487aa5cdd51761c377da5f','2020-10-21 15:18:22.274341',2);
+/*!40000 ALTER TABLE `authtoken_token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `customer_customer`
 --
 
@@ -206,7 +233,7 @@ CREATE TABLE `customer_customer` (
   `gender` varchar(10) DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,6 +242,7 @@ CREATE TABLE `customer_customer` (
 
 LOCK TABLES `customer_customer` WRITE;
 /*!40000 ALTER TABLE `customer_customer` DISABLE KEYS */;
+INSERT INTO `customer_customer` VALUES (3,'nbdat22','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Bá Đạt','null','MALE',NULL),(4,'dqdong26','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Quý Đông','null','MALE','1999-04-25'),(5,'tnanh23','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Ánh','null','FEMALE','1999-09-25'),(6,'vvnminh90','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Minh','null','FEMALE','1999-01-05'),(7,'dmkhoa60','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Khoa','null','MALE','1999-09-24');
 /*!40000 ALTER TABLE `customer_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +292,7 @@ CREATE TABLE `customer_telnumber` (
   PRIMARY KEY (`id`),
   KEY `customer_telnumber_customer_id_a0e7a355_fk_customer_customer_id` (`customer_id`),
   CONSTRAINT `customer_telnumber_customer_id_a0e7a355_fk_customer_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer_customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,6 +301,7 @@ CREATE TABLE `customer_telnumber` (
 
 LOCK TABLES `customer_telnumber` WRITE;
 /*!40000 ALTER TABLE `customer_telnumber` DISABLE KEYS */;
+INSERT INTO `customer_telnumber` VALUES (1,'09324582147','null',3),(2,'0987255114','null',4),(3,'0987255114','Di động',5),(4,'0327255114','Di động',6),(5,'0927221474','Di động',7);
 /*!40000 ALTER TABLE `customer_telnumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,7 +353,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -333,7 +362,7 @@ CREATE TABLE `django_content_type` (
 
 LOCK TABLES `django_content_type` WRITE;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(20,'customer','customer'),(22,'customer','shipaddress'),(21,'customer','telnumber'),(17,'order','cart'),(16,'order','cartitem'),(18,'order','order'),(15,'order','orderdetail'),(14,'order','paymentservice'),(19,'order','shipservice'),(9,'product','category'),(7,'product','discount'),(12,'product','discountitem'),(11,'product','manufacturers'),(13,'product','product'),(8,'product','productattribute'),(10,'product','productattributevalue'),(6,'sessions','session');
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(23,'authtoken','token'),(24,'authtoken','tokenproxy'),(5,'contenttypes','contenttype'),(20,'customer','customer'),(22,'customer','shipaddress'),(21,'customer','telnumber'),(17,'order','cart'),(16,'order','cartitem'),(18,'order','order'),(15,'order','orderdetail'),(14,'order','paymentservice'),(19,'order','shipservice'),(9,'product','category'),(7,'product','discount'),(12,'product','discountitem'),(11,'product','manufacturer'),(13,'product','product'),(8,'product','productattribute'),(10,'product','productattributevalue'),(6,'sessions','session');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -350,7 +379,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -359,7 +388,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2020-10-10 15:06:07.791779'),(2,'auth','0001_initial','2020-10-10 15:06:08.136303'),(3,'admin','0001_initial','2020-10-10 15:06:09.126429'),(4,'admin','0002_logentry_remove_auto_add','2020-10-10 15:06:09.313547'),(5,'admin','0003_logentry_add_action_flag_choices','2020-10-10 15:06:09.322570'),(6,'contenttypes','0002_remove_content_type_name','2020-10-10 15:06:09.459979'),(7,'auth','0002_alter_permission_name_max_length','2020-10-10 15:06:09.548743'),(8,'auth','0003_alter_user_email_max_length','2020-10-10 15:06:09.570798'),(9,'auth','0004_alter_user_username_opts','2020-10-10 15:06:09.578748'),(10,'auth','0005_alter_user_last_login_null','2020-10-10 15:06:09.663291'),(11,'auth','0006_require_contenttypes_0002','2020-10-10 15:06:09.667185'),(12,'auth','0007_alter_validators_add_error_messages','2020-10-10 15:06:09.675456'),(13,'auth','0008_alter_user_username_max_length','2020-10-10 15:06:09.886511'),(14,'auth','0009_alter_user_last_name_max_length','2020-10-10 15:06:10.060073'),(15,'auth','0010_alter_group_name_max_length','2020-10-10 15:06:10.078844'),(16,'auth','0011_update_proxy_permissions','2020-10-10 15:06:10.087177'),(17,'auth','0012_alter_user_first_name_max_length','2020-10-10 15:06:10.194888'),(18,'sessions','0001_initial','2020-10-10 15:06:10.228734'),(19,'customer','0001_initial','2020-10-10 17:32:09.451897'),(20,'product','0001_initial','2020-10-10 17:32:09.891227'),(21,'order','0001_initial','2020-10-10 17:32:10.991979'),(22,'order','0002_auto_20201011_0044','2020-10-10 17:44:31.208494'),(23,'product','0002_auto_20201011_0044','2020-10-10 17:44:31.214533'),(24,'order','0003_auto_20201012_1006','2020-10-12 03:06:52.507471'),(25,'product','0003_auto_20201012_1006','2020-10-12 03:06:52.625520'),(26,'order','0004_auto_20201013_2325','2020-10-13 16:25:20.362587'),(27,'product','0004_auto_20201013_2325','2020-10-13 16:25:20.370524');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2020-10-10 15:06:07.791779'),(2,'auth','0001_initial','2020-10-10 15:06:08.136303'),(3,'admin','0001_initial','2020-10-10 15:06:09.126429'),(4,'admin','0002_logentry_remove_auto_add','2020-10-10 15:06:09.313547'),(5,'admin','0003_logentry_add_action_flag_choices','2020-10-10 15:06:09.322570'),(6,'contenttypes','0002_remove_content_type_name','2020-10-10 15:06:09.459979'),(7,'auth','0002_alter_permission_name_max_length','2020-10-10 15:06:09.548743'),(8,'auth','0003_alter_user_email_max_length','2020-10-10 15:06:09.570798'),(9,'auth','0004_alter_user_username_opts','2020-10-10 15:06:09.578748'),(10,'auth','0005_alter_user_last_login_null','2020-10-10 15:06:09.663291'),(11,'auth','0006_require_contenttypes_0002','2020-10-10 15:06:09.667185'),(12,'auth','0007_alter_validators_add_error_messages','2020-10-10 15:06:09.675456'),(13,'auth','0008_alter_user_username_max_length','2020-10-10 15:06:09.886511'),(14,'auth','0009_alter_user_last_name_max_length','2020-10-10 15:06:10.060073'),(15,'auth','0010_alter_group_name_max_length','2020-10-10 15:06:10.078844'),(16,'auth','0011_update_proxy_permissions','2020-10-10 15:06:10.087177'),(17,'auth','0012_alter_user_first_name_max_length','2020-10-10 15:06:10.194888'),(18,'sessions','0001_initial','2020-10-10 15:06:10.228734'),(19,'customer','0001_initial','2020-10-10 17:32:09.451897'),(20,'product','0001_initial','2020-10-10 17:32:09.891227'),(21,'order','0001_initial','2020-10-10 17:32:10.991979'),(22,'order','0002_auto_20201011_0044','2020-10-10 17:44:31.208494'),(23,'product','0002_auto_20201011_0044','2020-10-10 17:44:31.214533'),(24,'order','0003_auto_20201012_1006','2020-10-12 03:06:52.507471'),(25,'product','0003_auto_20201012_1006','2020-10-12 03:06:52.625520'),(26,'order','0004_auto_20201013_2325','2020-10-13 16:25:20.362587'),(27,'product','0004_auto_20201013_2325','2020-10-13 16:25:20.370524'),(28,'order','0005_auto_20201019_1512','2020-10-19 08:12:37.306021'),(29,'product','0005_auto_20201019_1512','2020-10-19 08:12:37.542485'),(30,'authtoken','0001_initial','2020-10-21 15:01:54.299450'),(31,'authtoken','0002_auto_20160226_1747','2020-10-21 15:01:54.548761'),(32,'authtoken','0003_tokenproxy','2020-10-21 15:01:54.554713'),(33,'order','0006_auto_20201021_2201','2020-10-21 15:01:54.566426'),(34,'product','0006_auto_20201021_2201','2020-10-21 15:01:54.767762'),(35,'order','0007_auto_20201022_1520','2020-10-22 08:20:46.645913'),(36,'product','0007_auto_20201022_1520','2020-10-22 08:20:46.661130');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +414,6 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('mel31wyvixn81n0vkisn9l7umof8a4fi','.eJxVjEEOwiAQRe_C2pCBAqUu3fcMZDoMUjU0Ke3KeHdp0oVu33v_v0XAfcthr7yGOYqrUOLyyyakJ5dDxAeW-yJpKds6T_JI5GmrHJfIr9vZ_h1krLmtNQ1eARlib5KlARBiDxrZWwsqNeV671EntuyUIhMbBuo0WA2dc-LzBc-HNsM:1kSLBA:FAa3zfCf3LsXanZwwSsgXD0oka-nw6W-PGlhivn1zZc','2020-10-27 14:21:28.198056');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -649,13 +677,13 @@ LOCK TABLES `product_discountitem` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `product_manufacturers`
+-- Table structure for table `product_manufacturer`
 --
 
-DROP TABLE IF EXISTS `product_manufacturers`;
+DROP TABLE IF EXISTS `product_manufacturer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product_manufacturers` (
+CREATE TABLE `product_manufacturer` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` varchar(300) DEFAULT NULL,
@@ -664,13 +692,13 @@ CREATE TABLE `product_manufacturers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `product_manufacturers`
+-- Dumping data for table `product_manufacturer`
 --
 
-LOCK TABLES `product_manufacturers` WRITE;
-/*!40000 ALTER TABLE `product_manufacturers` DISABLE KEYS */;
-INSERT INTO `product_manufacturers` VALUES (1,'Asus',NULL),(2,'Dell',NULL),(3,'HP',NULL);
-/*!40000 ALTER TABLE `product_manufacturers` ENABLE KEYS */;
+LOCK TABLES `product_manufacturer` WRITE;
+/*!40000 ALTER TABLE `product_manufacturer` DISABLE KEYS */;
+INSERT INTO `product_manufacturer` VALUES (1,'Asus',NULL),(2,'Dell',NULL),(3,'HP',NULL);
+/*!40000 ALTER TABLE `product_manufacturer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -688,13 +716,13 @@ CREATE TABLE `product_product` (
   `active` tinyint(1) NOT NULL,
   `description` varchar(300) DEFAULT NULL,
   `category_id` int DEFAULT NULL,
-  `manufacturers_id` int DEFAULT NULL,
+  `manufacturer_id` int DEFAULT NULL,
   `unit_in_stock` int,
   PRIMARY KEY (`id`),
   KEY `product_product_category_id_0c725779_fk_product_category_id` (`category_id`),
-  KEY `product_product_manufacturers_id_e1298339_fk_product_m` (`manufacturers_id`),
+  KEY `product_product_manufacturers_id_e1298339_fk_product_m` (`manufacturer_id`),
   CONSTRAINT `product_product_category_id_0c725779_fk_product_category_id` FOREIGN KEY (`category_id`) REFERENCES `product_category` (`id`),
-  CONSTRAINT `product_product_manufacturers_id_e1298339_fk_product_m` FOREIGN KEY (`manufacturers_id`) REFERENCES `product_manufacturers` (`id`)
+  CONSTRAINT `product_product_manufacturer_id_4a7a0ae9_fk_product_m` FOREIGN KEY (`manufacturer_id`) REFERENCES `product_manufacturer` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -772,4 +800,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-18 10:06:23
+-- Dump completed on 2020-10-22 15:22:02

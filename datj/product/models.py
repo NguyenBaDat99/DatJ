@@ -12,7 +12,7 @@ class Category(models.Model):
         return self.name
 
 
-class Manufacturers(models.Model):
+class Manufacturer(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(default=None, blank=True, null=True, max_length=300)
 
@@ -22,7 +22,7 @@ class Manufacturers(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-    manufacturers = models.ForeignKey(Manufacturers, null=True, blank=True, on_delete=models.SET_NULL)
+    manufacturer = models.ForeignKey(Manufacturer, null=True, blank=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=50)
     price = models.FloatField(blank=True, null=True, default=0)
     unit_in_stock = models.IntegerField(blank=True, null=True, default=0)

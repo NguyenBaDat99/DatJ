@@ -41,3 +41,5 @@ class ShipAddress(models.Model):
 
     def __str__(self):
         return self.apartment_number + " " + self.street + " " + self.ward + " " + self.district + " " + self.city
+
+

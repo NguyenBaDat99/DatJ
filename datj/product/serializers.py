@@ -10,7 +10,7 @@ class GetCategorySerializer(serializers.ModelSerializer):
 
 class GetManufacturersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Manufacturers
+        model = Manufacturer
         fields = ('pk', 'name', 'description',)
 
 
@@ -42,7 +42,7 @@ class GetDiscountItemSerializer(serializers.ModelSerializer):
 class GetProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('pk', 'category', 'manufacturers',
+        fields = ('pk', 'category', 'manufacturer',
                   'price', 'unit_in_stock', 'unit_in_order', 'active', 'description',)
 
 
@@ -60,17 +60,30 @@ class KeywordAttributeValueSerializer(serializers.Serializer):
     pk = serializers.IntegerField(default=0)
     product = serializers.IntegerField(default=0)
     product_attribute = serializers.IntegerField(default=0)
-    value = serializers.CharField(max_length=100, default="")
+    value = serializers.CharField(max_length=100, default="null")
 
 
 class KeywordDiscountSerializer(serializers.Serializer):
     pk = serializers.IntegerField(default=0)
-    code = serializers.CharField(max_length=30)
+    code = serializers.CharField(max_length=30, default="null")
     on_bill = serializers.BooleanField(default=0)
     active = serializers.BooleanField(default=0)
 
 
 class KeywordDiscountItemSerializer(serializers.Serializer):
     pk = serializers.IntegerField(default=0)
-    discount = serializers.CharField(max_length=30)
+    discount = serializers.CharField(max_length=30, default="null")
     product = serializers.IntegerField(default=0)
+
+
+class KeywordProductSerializer(serializers.Serializer):
+    pk = serializers.IntegerField(default=0)
+    category = serializers.IntegerField(default=0)
+    manufacturer = serializers.IntegerField(default=0)
+    name = serializers.CharField(max_length=50, default="null")
+    from_price = serializers.FloatField(default=0)
+    to_price = serializers.FloatField(default=0)
+    from_in_stock = serializers.IntegerField(default=0)
+    to_in_stock = serializers.IntegerField(default=0)
+    from_in_order = serializers.IntegerField(default=0)
+    to_in_order = serializers.IntegerField(default=0)

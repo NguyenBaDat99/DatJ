@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from product.views import *
+from customer.views import *
+from rest_framework.authtoken import views
 
 urlpatterns = [
     path('product/', include('product.urls')),
@@ -26,8 +28,11 @@ urlpatterns = [
     path('product/product-attribute-value/get/', GetProAttributeValueAPIView.as_view()),
     path('product/discount/get/', GetDiscountAPIView.as_view()),
     path('product/discount-item/get/', GetDiscountItemAPIView.as_view()),
-    path('product/category/add/', AddCategoryAPIView.as_view()),
+    # path('product/category/add/', AddCategoryAPIView.as_view()),
     path('order/', include('order.urls')),
     path('customer/', include('customer.urls')),
+    path('customer/sign-up/', SignUpCustomerAPIView.as_view()),
+    path('customer/sign-in/', SignInCustomerAPIView.as_view()),
     path('admin/', admin.site.urls),
+    path('api-token-auth/', views.obtain_auth_token),
 ]

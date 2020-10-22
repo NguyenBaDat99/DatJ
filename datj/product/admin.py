@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category)
-admin.site.register(Manufacturers)
+admin.site.register(Manufacturer)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductAttribute)
 admin.site.register(ProductAttributeValue)
