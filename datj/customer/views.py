@@ -11,6 +11,7 @@ from rest_framework.authtoken.models import Token
 from .models import *
 from .serializers import *
 
+
 def index(request):
     return HttpResponse("Welcome to customer site.")
 
@@ -56,17 +57,57 @@ class SignInCustomerAPIView(APIView):
         list_customer = Customer.objects.all()
         if list_customer.filter(username=username):
             if list_customer.filter(password=password):
-                mydata = GetCustomerSerializer(list_customer.filter(username=username), many=True)
+                # mydata = GetCustomerSerializer(list_customer.filter(username=username), many=True)
+                customer = list_customer.filter(username=username).first()
+                token = Token.objects.filter(customer=customer).first()
+                key = hashlib.sha256((customer.username + str(datetime.now())).encode("utf-8")).hexdigest()
+                if token is None:
+                    token = Token.objects.create(key=key, created=datetime.now(), customer=customer)
+                else:
+                    Token.objects.filter(pk=token.pk).update(key=key, created=datetime.now())
+                    token = Token.objects.filter(pk=token.pk).first()
 
-                # token = Token.objects.create(user=None)
-
-                # token = Token.objects.create(=...)
-                # print(token.key)
-
-                return Response(data=mydata.data, status=status.HTTP_200_OK)
+                return Response({
+                    'username': customer.username,
+                    'email': customer.email,
+                    'token': token.key
+                }, status=status.HTTP_200_OK)
             else:
                 return Response('Wrong password!', status=status.HTTP_400_BAD_REQUEST)
 
         else:
             return Response('Username not exists!', status=status.HTTP_400_BAD_REQUEST)
+
+
+class AddAddressAPIView(APIView):
+
+    def post(self, request):
+        try:
+            token = request.data['token']
+        except:
+            return Response({
+                "detail": "Token not found"
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        token = Token.objects.filter(key=token).first()
+        if token is None:
+            return Response({
+                "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        data = AddAddressSerializer(data=request.data)
+        if not data.is_valid():
+            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+
+        customer = Customer.objects.filter(pk=token.customer.pk).first()
+        address = ShipAddress.objects.create(apartment_number=data.data['apartment_number'],
+                                             street=data.data['street'],
+                                             ward=data.data['ward'],
+                                             district=data.data['district'],
+                                             city=data.data['city'],
+                                             description=data.data['description'],
+                                             customer=customer)
+        return Response({
+            "detail": "Add new ship address successful"
+        }, status=status.HTTP_200_OK)
+
 

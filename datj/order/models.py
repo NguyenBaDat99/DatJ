@@ -24,6 +24,13 @@ class ShipService(models.Model):
         return self.name
 
 
+class OrderStage(models.TextChoices):
+    Processing = "Processing"
+    Shipping = "Shipping"
+    Done = "Done"
+    Cancel = "Cancel"
+
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
     ship_by = models.ForeignKey(ShipService, null=True, blank=True, on_delete=models.SET_NULL)
@@ -33,16 +40,9 @@ class Order(models.Model):
     paid_date = models.DateTimeField(null=True, blank=True)
     discount_code = models.CharField(max_length=30, null=True, blank=True)
     total_discount = models.FloatField(default=0)
-    total_price = models.FloatField
-    total_actual_price = models.FloatField
+    total_price = models.FloatField(default=0)
+    total_actual_price = models.FloatField(default=0)
     order_date = models.DateTimeField(default=datetime.now())
-
-    class OrderStage(models.TextChoices):
-        Processing = 1
-        Shipping = 2
-        Done = 3
-        Cancel = 4
-
     stage = models.CharField(max_length=20, choices=OrderStage.choices, default=OrderStage.Processing)
     description = models.CharField(max_length=300, null=True, blank=True)
 
@@ -55,7 +55,9 @@ class OrderDetail(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
     discount_code = models.CharField(max_length=30)
-    unit_price = models.FloatField
+    unit_price = models.FloatField(default=0)
+    discount_amount = models.FloatField(default=0)
+    unit_actual_price = models.FloatField(default=0)
 
 
 class Cart(models.Model):
@@ -63,19 +65,14 @@ class Cart(models.Model):
     total_price = models.FloatField(default=0)
 
     def __str__(self):
-        return self.customer + "-Cart"
+        return self.customer.username + "-Cart"
 
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
-    unit_price = models.FloatField
+    unit_price = models.FloatField(default=0)
 
-
-
-
-
-
-
-
+    def __str__(self):
+        return self.pk

@@ -52,7 +52,7 @@ class ProductAttributeValue(models.Model):
 
 
 class Discount(models.Model):
-    code = models.CharField(max_length=30)
+    code = models.CharField(max_length=30, unique=True)
     discount_percent = models.FloatField(default=0)
     on_bill = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
@@ -66,6 +66,9 @@ class Discount(models.Model):
 class DiscountItem(models.Model):
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.discount.__str__() + " - " + self.product.__str__()
 
 
 

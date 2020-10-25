@@ -2,9 +2,11 @@ from enum import Enum
 
 from django.db import models
 
+from datetime import datetime
+
 
 class Customer(models.Model):
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=255)
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=100, null=True, blank=True)
@@ -43,3 +45,10 @@ class ShipAddress(models.Model):
         return self.apartment_number + " " + self.street + " " + self.ward + " " + self.district + " " + self.city
 
 
+class Token(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    key = models.CharField(max_length=255, unique=True)
+    created = models.DateTimeField(default=datetime.now())
+
+    def __str__(self):
+        return self.key

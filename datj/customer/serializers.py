@@ -18,6 +18,15 @@ class SignInCustomerSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=50)
 
 
+class AddAddressSerializer(serializers.Serializer):
+    apartment_number = serializers.CharField(max_length=50)
+    street = serializers.CharField(max_length=50)
+    ward = serializers.CharField(max_length=50)
+    district = serializers.CharField(max_length=50)
+    city = serializers.CharField(max_length=50)
+    description = serializers.CharField(max_length=300)
+
+
 class GetCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer

@@ -42,7 +42,7 @@ class GetDiscountItemSerializer(serializers.ModelSerializer):
 class GetProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('pk', 'category', 'manufacturer',
+        fields = ('pk', 'name', 'category', 'manufacturer',
                   'price', 'unit_in_stock', 'unit_in_order', 'active', 'description',)
 
 
