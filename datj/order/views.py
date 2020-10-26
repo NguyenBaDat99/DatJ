@@ -22,7 +22,7 @@ def index(request):
 
 class GetCartAPIView(APIView):
 
-    def get(self, request):
+    def post(self, request):
         try:
             token = request.data['token']
         except:
@@ -191,6 +191,48 @@ class GetCustomerOrderAPIView(APIView):
         order = Order.objects.all().filter(customer=customer)
 
         return Response(GetOrderSerializer(order, many=True).data, status=status.HTTP_200_OK)
+
+
+class GetCustomerOrderDetailAPIView(APIView):
+
+    def post(self, request):
+        try:
+            token = request.data['token']
+        except:
+            return Response({
+                "detail": "Token not found"
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        token = Token.objects.filter(key=token).first()
+        if token is None:
+            return Response({
+                "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        customer = Customer.objects.filter(pk=token.customer.pk).first()
+        order = request.data['order']
+        order = Order.objects.filter(pk=order, customer=customer).first()
+        if order is None:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        order_detail = OrderDetail.objects.filter(order=order)
+
+        return Response({
+            "customer": order.customer.username,
+            "ship_by": order.ship_by.name,
+            "ship_to": str(order.ship_to),
+            "shipped_date": order.shipped_date,
+            "payment_type": order.payment_type.name,
+            "paid_date": order.paid_date,
+            "discount_code": order.discount_code,
+            "total_discount": order.total_discount,
+            "total_price": order.total_price,
+            "total_actual_price": order.total_actual_price,
+            "order_date": order.order_date,
+            "stage": order.stage,
+            "description": order.description,
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
+        }, status=status.HTTP_200_OK)
 
 
 class AddCustomerOrderAPIView(APIView):

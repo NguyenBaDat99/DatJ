@@ -30,17 +30,21 @@ urlpatterns = [
     path('product/discount/get/', GetDiscountAPIView.as_view()),
     path('product/discount-item/get/', GetDiscountItemAPIView.as_view()),
     # path('product/category/add/', AddCategoryAPIView.as_view()),
+
     path('order/', include('order.urls')),
     path('order/get-cart/', GetCartAPIView.as_view()),
     path('order/add-cart-item/', AddCartItemAPIView.as_view()),
     path('order/del-cart-item/', DelCartItemAPIView.as_view()),
     path('order/get/', GetOrderAPIView.as_view()),
-    path('order/get-customer-order/', GetCustomerOrderAPIView.as_view()),
+    path('order/get-order/', GetCustomerOrderAPIView.as_view()),
+    path('order/get-order-detail/', GetCustomerOrderDetailAPIView.as_view()),
     path('order/add-customer-order/', AddCustomerOrderAPIView.as_view()),
+
     path('customer/', include('customer.urls')),
     path('customer/sign-up/', SignUpCustomerAPIView.as_view()),
     path('customer/sign-in/', SignInCustomerAPIView.as_view()),
     path('customer/add-address/', AddAddressAPIView.as_view()),
+
     path('admin/', admin.site.urls),
     path('api-token-auth/', views.obtain_auth_token),
 ]
