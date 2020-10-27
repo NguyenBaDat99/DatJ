@@ -35,7 +35,7 @@ class GetDiscountSerializer(serializers.ModelSerializer):
 
 class GetDiscountItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Discount
+        model = DiscountItem
         fields = ('pk', 'discount', 'product',)
 
 

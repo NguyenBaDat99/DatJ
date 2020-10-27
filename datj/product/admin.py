@@ -1,5 +1,18 @@
+from re import search
+
 from django.contrib import admin
 from .models import *
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_per_page = 12
+    search_fields = ('name',)
+    list_filter = ('category_belong',)
+
+
+class ManufacturerAdmin(admin.ModelAdmin):
+    list_per_page = 12
+    search_fields = ('name',)
 
 
 class ProductAttributeValueInline(admin.TabularInline):
@@ -9,6 +22,20 @@ class ProductAttributeValueInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductAttributeValueInline]
+    list_per_page = 12
+    search_fields = ('name',)
+    list_filter = ('category', 'manufacturer', 'active',)
+
+
+class ProductAttributeAdmin(admin.ModelAdmin):
+    list_per_page = 12
+    search_fields = ('name',)
+
+
+class ProductAttributeValueAdmin(admin.ModelAdmin):
+    list_per_page = 12
+    search_fields = ('value',)
+    list_filter = ('product', 'product_attribute',)
 
 
 class DiscountItemInline(admin.TabularInline):
@@ -18,13 +45,20 @@ class DiscountItemInline(admin.TabularInline):
 
 class DiscountAdmin(admin.ModelAdmin):
     inlines = [DiscountItemInline]
+    list_per_page = 12
+    search_fields = ('code',)
+    list_filter = ('on_bill', 'active', 'apply_date', 'end_date',)
 
 
-admin.site.register(Category)
-admin.site.register(Manufacturer)
+class DiscountItemAdmin(admin.ModelAdmin):
+    list_per_page = 12
+
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductAttribute)
-admin.site.register(ProductAttributeValue)
+admin.site.register(ProductAttribute, ProductAttributeAdmin)
+admin.site.register(ProductAttributeValue, ProductAttributeValueAdmin)
 admin.site.register(Discount, DiscountAdmin)
-admin.site.register(DiscountItem)
+admin.site.register(DiscountItem, DiscountItemAdmin)
 # Register your models here.

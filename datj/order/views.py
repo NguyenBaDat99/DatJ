@@ -161,17 +161,6 @@ class DelCartItemAPIView(APIView):
         }, status=status.HTTP_200_OK)
 
 
-class GetOrderAPIView(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        list_order = Order.objects.all()
-
-        mydata = GetOrderSerializer(list_order, many=True)
-        return Response(data=mydata.data, status=status.HTTP_200_OK)
-
-
 class GetCustomerOrderAPIView(APIView):
 
     def post(self, request):

@@ -59,6 +59,10 @@ class OrderDetail(models.Model):
     discount_amount = models.FloatField(default=0)
     unit_actual_price = models.FloatField(default=0)
 
+    def __str__(self):
+        return self.order.__str__() + ": " + self.product.__str__() \
+               + " (SL: " + self.quantity.__str__() + " | Đơn giá: " + self.unit_actual_price.__str__() + ")"
+
 
 class Cart(models.Model):
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, unique=True)
