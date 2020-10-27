@@ -39,11 +39,14 @@ urlpatterns = [
     path('order/get-order/', GetCustomerOrderAPIView.as_view()),
     path('order/get-order-detail/', GetCustomerOrderDetailAPIView.as_view()),
     path('order/add-customer-order/', AddCustomerOrderAPIView.as_view()),
+    path('order/cancel-customer-order/', CancelCustomerOrderAPIView.as_view()),
 
     path('customer/', include('customer.urls')),
     path('customer/sign-up/', SignUpCustomerAPIView.as_view()),
     path('customer/sign-in/', SignInCustomerAPIView.as_view()),
+    path('customer/sign-out/', SignOutCustomerAPIView.as_view()),
     path('customer/add-address/', AddAddressAPIView.as_view()),
+    path('customer/add-tel-number/', AddTelNumberAPIView.as_view()),
 
     path('admin/', admin.site.urls),
     path('api-token-auth/', views.obtain_auth_token),

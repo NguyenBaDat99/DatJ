@@ -4,7 +4,7 @@ from django.db import models
 
 from datetime import datetime
 
-from customer.models import Customer, ShipAddress
+from customer.models import Customer, ShipAddress, TelNumber
 from product.models import Product
 
 
@@ -35,6 +35,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
     ship_by = models.ForeignKey(ShipService, null=True, blank=True, on_delete=models.SET_NULL)
     ship_to = models.ForeignKey(ShipAddress, null=True, blank=True, on_delete=models.SET_NULL)
+    contact_tel = models.ForeignKey(TelNumber, null=True, blank=True, on_delete=models.SET_NULL)
     shipped_date = models.DateTimeField(null=True, blank=True)
     payment_type = models.ForeignKey(PaymentService, null=True, blank=True, on_delete=models.SET_NULL)
     paid_date = models.DateTimeField(null=True, blank=True)
@@ -54,7 +55,7 @@ class OrderDetail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
-    discount_code = models.CharField(max_length=30)
+    discount_code = models.CharField(max_length=30, null=True, blank=True)
     unit_price = models.FloatField(default=0)
     discount_amount = models.FloatField(default=0)
     unit_actual_price = models.FloatField(default=0)

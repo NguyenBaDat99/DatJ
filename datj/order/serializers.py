@@ -11,7 +11,7 @@ class GetCartItemSerializer(serializers.ModelSerializer):
 class GetOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ('pk', 'customer', 'ship_by', 'ship_to', 'shipped_date', 'payment_type', 'paid_date', 'discount_code',
+        fields = ('pk', 'customer', 'payment_type', 'ship_by', 'ship_to', 'contact_tel', 'shipped_date', 'paid_date', 'discount_code',
                   'total_discount', 'total_price', 'total_actual_price', 'order_date', 'stage', 'description')
 
 
@@ -28,9 +28,9 @@ class KeywordCartItemSerializer(serializers.Serializer):
 
 
 class AddCustomerOrderSerializer(serializers.Serializer):
+    payment_type = serializers.IntegerField(default=0)
     ship_by = serializers.IntegerField(default=0)
     ship_to = serializers.IntegerField(default=0)
-    payment_type = serializers.IntegerField(default=0)
-    discount_code = serializers.CharField(max_length=30)
-    order_date = serializers.DateTimeField(default=datetime.now())
+    contact_tel = serializers.IntegerField(default=0)
+    discount_code = serializers.CharField(max_length=30, allow_null=True, allow_blank=True)
     description = serializers.CharField(max_length=300)

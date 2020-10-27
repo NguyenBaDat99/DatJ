@@ -1,5 +1,6 @@
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
 
 from django.http import HttpResponse
 
@@ -79,6 +80,32 @@ class SignInCustomerAPIView(APIView):
             return Response('Username not exists!', status=status.HTTP_400_BAD_REQUEST)
 
 
+class SignOutCustomerAPIView(APIView):
+
+    def post(self, request):
+        try:
+            token = request.data['token']
+        except:
+            return Response({
+                "detail": "Token not found"
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        token = Token.objects.filter(key=token).first()
+        if token is None:
+            return Response({
+                "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired! You already sign out"
+            }, status=status.HTTP_200_OK)
+        else:
+            token.created -= timedelta(hours=1)
+            token.save()
+            return Response({
+                "detail": "Sign out successful"
+            }, status=status.HTTP_200_OK)
+
+
 class AddAddressAPIView(APIView):
 
     def post(self, request):
@@ -108,6 +135,34 @@ class AddAddressAPIView(APIView):
                                              customer=customer)
         return Response({
             "detail": "Add new ship address successful"
+        }, status=status.HTTP_200_OK)
+
+
+class AddTelNumberAPIView(APIView):
+
+    def post(self, request):
+        try:
+            token = request.data['token']
+        except:
+            return Response({
+                "detail": "Token not found"
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        token = Token.objects.filter(key=token).first()
+        if token is None:
+            return Response({
+                "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        data = AddTelNumberSerializer(data=request.data)
+        if not data.is_valid():
+            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+
+        customer = Customer.objects.filter(pk=token.customer.pk).first()
+        tel_number = TelNumber.objects.create(tel_number=data.data['tel_number'],
+                                              number_type=data.data['number_type'],
+                                              customer=customer)
+        return Response({
+            "detail": "Add new tel number successful"
         }, status=status.HTTP_200_OK)
 
 

@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, timezone
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from customer.models import Token, Customer, ShipAddress
+from customer.models import Token, Customer, ShipAddress, TelNumber
 from product.models import Product, Discount, DiscountItem
 
 from .models import *
@@ -33,6 +33,10 @@ class GetCartAPIView(APIView):
         if token is None:
             return Response({
                 "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
@@ -61,6 +65,10 @@ class AddCartItemAPIView(APIView):
         if token is None:
             return Response({
                 "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
 
         product = request.data['product']
@@ -114,6 +122,10 @@ class DelCartItemAPIView(APIView):
         if token is None:
             return Response({
                 "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
 
         product = request.data['product']
@@ -175,6 +187,10 @@ class GetCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
+            }, status=status.HTTP_401_UNAUTHORIZED)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
         order = Order.objects.all().filter(customer=customer)
@@ -196,22 +212,28 @@ class GetCustomerOrderDetailAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
         customer = Customer.objects.filter(pk=token.customer.pk).first()
         order = request.data['order']
         order = Order.objects.filter(pk=order, customer=customer).first()
         if order is None:
             return Response({
                 "detail": "Invalid Order ID"
-            }, status=status.HTTP_401_UNAUTHORIZED)
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         order_detail = OrderDetail.objects.filter(order=order)
 
         return Response({
             "customer": order.customer.username,
+            "payment_type": order.payment_type.name,
             "ship_by": order.ship_by.name,
             "ship_to": str(order.ship_to),
             "shipped_date": order.shipped_date,
-            "payment_type": order.payment_type.name,
+            "contact_tel": order.contact_tel.__str__(),
             "paid_date": order.paid_date,
             "discount_code": order.discount_code,
             "total_discount": order.total_discount,
@@ -238,6 +260,10 @@ class AddCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
+            }, status=status.HTTP_401_UNAUTHORIZED)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
         cart = Cart.objects.filter(customer=customer).first()
@@ -246,12 +272,14 @@ class AddCustomerOrderAPIView(APIView):
                 "detail": "Your cart is empty!"
             }, status=status.HTTP_400_BAD_REQUEST)
 
+        payment_type = request.data['payment_type']
+        payment_type = PaymentService.objects.filter(pk=payment_type).first()
         ship_by = request.data['ship_by']
         ship_by = ShipService.objects.filter(pk=ship_by).first()
         ship_to = request.data['ship_to']
         ship_to = ShipAddress.objects.filter(pk=ship_to, customer=customer).first()
-        payment_type = request.data['payment_type']
-        payment_type = PaymentService.objects.filter(pk=payment_type).first()
+        contact_tel = request.data['contact_tel']
+        contact_tel = TelNumber.objects.filter(pk=contact_tel, customer=customer).first()
         paid_date = None
         shipped_date = datetime.now() + timedelta(days=7)
         discount_code = request.data['discount_code']
@@ -274,6 +302,15 @@ class AddCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid SHIP ADDRESS"
             }, status=status.HTTP_400_BAD_REQUEST)
+        if ship_to is None:
+            return Response({
+                "detail": "Invalid SHIP ADDRESS"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if contact_tel is None:
+            return Response({
+                "detail": "Invalid TEL NUMBER"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         if payment_type.pk != 1:
             paid_date = datetime.now()
         else:
@@ -289,6 +326,7 @@ class AddCustomerOrderAPIView(APIView):
         order = Order.objects.create(customer=customer,
                                      ship_by=ship_by,
                                      ship_to=ship_to,
+                                     contact_tel=contact_tel,
                                      shipped_date=shipped_date,
                                      payment_type=payment_type,
                                      paid_date=paid_date,
@@ -338,10 +376,11 @@ class AddCustomerOrderAPIView(APIView):
 
         return Response({
             "customer": order.customer.username,
+            "payment_type": order.payment_type.name,
             "ship_by": order.ship_by.name,
             "ship_to": str(order.ship_to),
             "shipped_date": order.shipped_date,
-            "payment_type": order.payment_type.name,
+            "contact_tel": order.contact_tel.__str__(),
             "paid_date": order.paid_date,
             "discount_code": order.discount_code,
             "total_discount": order.total_discount,
@@ -351,4 +390,56 @@ class AddCustomerOrderAPIView(APIView):
             "stage": order.stage,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
+        }, status=status.HTTP_200_OK)
+
+
+class CancelCustomerOrderAPIView(APIView):
+
+    def post(self, request):
+        try:
+            token = request.data['token']
+        except:
+            return Response({
+                "detail": "Token not found"
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        token = Token.objects.filter(key=token).first()
+        if token is None:
+            return Response({
+                "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        customer = Customer.objects.filter(pk=token.customer.pk).first()
+        order = request.data['order']
+        order = Order.objects.filter(pk=order, customer=customer).first()
+        if order is None:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if order.stage != OrderStage.Processing:
+            return Response({
+                "detail": "Can't cancel ORDER! Your ORDER stage: " + order.stage
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        order.stage = OrderStage.Cancel
+        order.save()
+
+        return Response({
+            "customer": order.customer.username,
+            "payment_type": order.payment_type.name,
+            "ship_by": order.ship_by.name,
+            "ship_to": str(order.ship_to),
+            "shipped_date": order.shipped_date,
+            "contact_tel": order.contact_tel.__str__(),
+            "paid_date": order.paid_date,
+            "discount_code": order.discount_code,
+            "total_discount": order.total_discount,
+            "total_price": order.total_price,
+            "total_actual_price": order.total_actual_price,
+            "order_date": order.order_date,
+            "stage": order.stage,
+            "description": order.description,
         }, status=status.HTTP_200_OK)

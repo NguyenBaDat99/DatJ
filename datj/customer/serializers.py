@@ -27,6 +27,11 @@ class AddAddressSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=300)
 
 
+class AddTelNumberSerializer(serializers.Serializer):
+    tel_number = serializers.CharField(max_length=20)
+    number_type = serializers.CharField(max_length=30)
+
+
 class GetCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
