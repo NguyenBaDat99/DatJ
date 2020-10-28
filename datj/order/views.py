@@ -175,7 +175,7 @@ class DelCartItemAPIView(APIView):
 
 class GetCustomerOrderAPIView(APIView):
 
-    def post(self, request):
+    def get(self, request):
         try:
             token = request.data['token']
         except:
@@ -194,6 +194,39 @@ class GetCustomerOrderAPIView(APIView):
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
         order = Order.objects.all().filter(customer=customer)
+
+        return Response(GetOrderSerializer(order, many=True).data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        try:
+            token = request.data['token']
+        except:
+            return Response({
+                "detail": "Token not found"
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        token = Token.objects.filter(key=token).first()
+        if token is None:
+            return Response({
+                "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            stage = request.data['stage']
+        except:
+            return Response({
+                "detail": "Stage not found"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        if stage not in OrderStage:
+            return Response({
+                "detail": "Invalid stage"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        customer = Customer.objects.filter(pk=token.customer.pk).first()
+        order = Order.objects.all().filter(customer=customer, stage=stage)
 
         return Response(GetOrderSerializer(order, many=True).data, status=status.HTTP_200_OK)
 
@@ -313,8 +346,6 @@ class AddCustomerOrderAPIView(APIView):
 
         if payment_type.pk != 1:
             paid_date = datetime.now()
-        else:
-            paid_date = shipped_date
 
         discount = None
         if not discount_code is None:
@@ -323,6 +354,22 @@ class AddCustomerOrderAPIView(APIView):
                 return Response({
                     "detail": "Invalid DISCOUNT CODE"
                 }, status=status.HTTP_400_BAD_REQUEST)
+
+        cart_item = CartItem.objects.filter(cart=cart)
+        for item in cart_item:
+            product = Product.objects.filter(pk=item.product.pk).first()
+            if item.quantity > (product.unit_in_stock - product.unit_in_order):
+                return Response({
+                    "detail": product.name + " don't have enough quantity for your order",
+                    "description": product.name + " have " +
+                                   str(product.unit_in_stock - product.unit_in_order) + " unit in stock left"
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+        for item in cart_item:
+            product = Product.objects.filter(pk=item.product.pk).first()
+            product.unit_in_order += item.quantity
+            product.save()
+
         order = Order.objects.create(customer=customer,
                                      ship_by=ship_by,
                                      ship_to=ship_to,
@@ -421,13 +468,24 @@ class CancelCustomerOrderAPIView(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
         if order.stage != OrderStage.Processing:
             return Response({
-                "detail": "Can't cancel ORDER! Your ORDER stage: " + order.stage
+                "detail": "Can't CANCEL order! Your ORDER stage: " + order.stage
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if not order.paid_date is None and order.paid_date < datetime.now(timezone.utc):
+            return Response({
+                "detail": "ORDER have PAID (" + str(order.paid_date) + "), can't REFUND or CANCEL"
             }, status=status.HTTP_400_BAD_REQUEST)
 
         order.stage = OrderStage.Cancel
         order.save()
 
+        order_detail = OrderDetail.objects.filter(order=order)
+        for item in order_detail:
+            product = Product.objects.filter(pk=item.product.pk).first()
+            product.unit_in_order -= item.quantity
+            product.save()
+
         return Response({
+            "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
             "ship_by": order.ship_by.name,
@@ -440,6 +498,150 @@ class CancelCustomerOrderAPIView(APIView):
             "total_price": order.total_price,
             "total_actual_price": order.total_actual_price,
             "order_date": order.order_date,
-            "stage": order.stage,
             "description": order.description,
+        }, status=status.HTTP_200_OK)
+
+
+class AdminShipCustomerOrderAPIView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        mydata = ChangeStageOrderSerializer(data=request.data)
+        if not mydata.is_valid():
+            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+
+        order = Order.objects.filter(pk=mydata.data['order']).first()
+
+        if order is None:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if order.stage != OrderStage.Processing:
+            return Response({
+                "detail": "Can't SHIPPING order! ORDER stage: " + order.stage
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        order.stage = OrderStage.Shipping
+        order.save()
+        order_detail = OrderDetail.objects.filter(order=order)
+        for item in order_detail:
+            product = Product.objects.filter(pk=item.product.pk).first()
+            product.unit_in_order -= item.quantity
+            product.unit_in_stock -= item.quantity
+            product.save()
+
+        return Response({
+            "stage": order.stage,
+            "customer": order.customer.username,
+            "payment_type": order.payment_type.name,
+            "ship_by": order.ship_by.name,
+            "ship_to": str(order.ship_to),
+            "shipped_date": order.shipped_date,
+            "contact_tel": order.contact_tel.__str__(),
+            "paid_date": order.paid_date,
+            "discount_code": order.discount_code,
+            "total_discount": order.total_discount,
+            "total_price": order.total_price,
+            "total_actual_price": order.total_actual_price,
+            "order_date": order.order_date,
+            "description": order.description,
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
+        }, status=status.HTTP_200_OK)
+
+
+class AdminDoneCustomerOrderAPIView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        mydata = ChangeStageOrderSerializer(data=request.data)
+        if not mydata.is_valid():
+            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+
+        order = Order.objects.filter(pk=mydata.data['order']).first()
+
+        if order is None:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if order.stage != OrderStage.Shipping:
+            return Response({
+                "detail": "Can't DONE order! ORDER stage: " + order.stage
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        order.stage = OrderStage.Done
+        if order.paid_date is None:
+            order.paid_date = datetime.now()
+        order.save()
+        order_detail = OrderDetail.objects.filter(order=order)
+
+        return Response({
+            "stage": order.stage,
+            "customer": order.customer.username,
+            "payment_type": order.payment_type.name,
+            "ship_by": order.ship_by.name,
+            "ship_to": str(order.ship_to),
+            "shipped_date": order.shipped_date,
+            "contact_tel": order.contact_tel.__str__(),
+            "paid_date": order.paid_date,
+            "discount_code": order.discount_code,
+            "total_discount": order.total_discount,
+            "total_price": order.total_price,
+            "total_actual_price": order.total_actual_price,
+            "order_date": order.order_date,
+            "description": order.description,
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
+        }, status=status.HTTP_200_OK)
+
+
+class AdminCancelCustomerOrderAPIView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        mydata = ChangeStageOrderSerializer(data=request.data)
+        if not mydata.is_valid():
+            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+
+        order = Order.objects.filter(pk=mydata.data['order']).first()
+
+        if order is None:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if order.stage != OrderStage.Processing and order.stage != OrderStage.Shipping:
+            return Response({
+                "detail": "Can't CANCEL order! ORDER stage: " + order.stage
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        order_detail = OrderDetail.objects.filter(order=order)
+        for item in order_detail:
+            product = Product.objects.filter(pk=item.product.pk).first()
+            if order.stage == OrderStage.Processing:
+                product.unit_in_order -= item.quantity
+            if order.stage == OrderStage.Shipping:
+                product.unit_in_stock += item.quantity
+            product.save()
+
+        order.stage = OrderStage.Cancel
+        order.paid_date = None
+        order.save()
+
+        return Response({
+            "stage": order.stage,
+            "customer": order.customer.username,
+            "payment_type": order.payment_type.name,
+            "ship_by": order.ship_by.name,
+            "ship_to": str(order.ship_to),
+            "shipped_date": order.shipped_date,
+            "contact_tel": order.contact_tel.__str__(),
+            "paid_date": order.paid_date,
+            "discount_code": order.discount_code,
+            "total_discount": order.total_discount,
+            "total_price": order.total_price,
+            "total_actual_price": order.total_actual_price,
+            "order_date": order.order_date,
+            "description": order.description,
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
         }, status=status.HTTP_200_OK)

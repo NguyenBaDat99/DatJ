@@ -75,46 +75,47 @@ class GetCategoryAPIView(APIView):
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        mydata = KeywordSerializer(data=request.data)
-        if not mydata.is_valid():
+        try:
+            pk = request.data['pk']
+            name = request.data['name']
+            category_belong = request.data['category_belong']
+        except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        pk = mydata.data['pk']
-        keyword = mydata.data['keyword']
         list_category = Category.objects.all()
-
-        if pk != 0:
+        if not pk is None and pk != 0:
             list_category = list_category.filter(pk=pk)
-        else:
-            list_category = list_category.filter(name__icontains=keyword)
+        if not name is None and name != "":
+            list_category = list_category.filter(name__icontains=name)
+        if not category_belong is None and category_belong != 0:
+            list_category = list_category.filter(category_belong=category_belong)
 
         mydata = GetCategorySerializer(list_category, many=True)
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
 
-class GetManufacturersAPIView(APIView):
+class GetManufacturerAPIView(APIView):
 
     def get(self, request):
         list_manufacturers = Manufacturer.objects.all()
 
-        mydata = GetCategorySerializer(list_manufacturers, many=True)
+        mydata = GetManufacturerSerializer(list_manufacturers, many=True)
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        mydata = KeywordSerializer(data=request.data)
-        if not mydata.is_valid():
+        try:
+            pk = request.data['pk']
+            name = request.data['name']
+        except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        pk = mydata.data['pk']
-        keyword = mydata.data['keyword']
-        list_manufacturers = Manufacturer.objects.all()
+        list_manufacturer = Manufacturer.objects.all()
+        if not pk is None and pk != 0:
+            list_manufacturer = list_manufacturer.filter(pk=pk)
+        if not name is None and name != "":
+            list_manufacturer = list_manufacturer.filter(name__icontains=name)
 
-        if pk != 0:
-            list_manufacturers = list_manufacturers.filter(pk=pk)
-        else:
-            list_manufacturers = list_manufacturers.filter(name__icontains=keyword)
-
-        mydata = GetManufacturersSerializer(list_manufacturers, many=True)
+        mydata = GetManufacturerSerializer(list_manufacturer, many=True)
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
 
@@ -140,7 +141,7 @@ class GetProAttributeAPIView(APIView):
         else:
             list_product_attribute = list_product_attribute.filter(name__icontains=keyword)
 
-        mydata = GetManufacturersSerializer(list_product_attribute, many=True)
+        mydata = GetManufacturerSerializer(list_product_attribute, many=True)
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
 
@@ -186,27 +187,25 @@ class GetDiscountAPIView(APIView):
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        mydata = KeywordAttributeValueSerializer(data=request.data)
-        if not mydata.is_valid():
+        try:
+            pk = request.data['pk']
+            code = request.data['code']
+            on_bill = request.data['on_bill']
+            active = request.data['active']
+        except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        pk = mydata.data['pk']
-        code = mydata.data['code']
-        on_bill = mydata.data['on_bill']
-        active = mydata.data['active']
         list_discount = Discount.objects.all()
-
-        if pk != 0:
+        if not pk is None and pk != 0:
             list_discount = list_discount.filter(pk=pk)
-        else:
-            if code != "null":
-                list_discount = list_discount.filter(code__icontains=code)
-            if on_bill != 0:
-                list_discount = list_discount.filter(on_bill=on_bill)
-            if active != 0:
-                list_discount = list_discount.filter(active=active)
+        if not code is None and code != "":
+            list_discount = list_discount.filter(code__icontains=code)
+        if not on_bill is None:
+            list_discount = list_discount.filter(on_bill=on_bill)
+        if not active is None:
+            list_discount = list_discount.filter(active=active)
 
-        mydata = GetProAttributeValueSerializer(list_discount, many=True)
+        mydata = GetDiscountSerializer(list_discount, many=True)
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
 
@@ -219,36 +218,24 @@ class GetDiscountItemAPIView(APIView):
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        mydata = KeywordDiscountItemSerializer(data=request.data)
-        if not mydata.is_valid():
+        try:
+            pk = request.data['pk']
+            discount = request.data['discount']
+            product = request.data['product']
+        except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        pk = mydata.data['pk']
-        discount = mydata.data['discount']
-        product = mydata.data['product']
         list_discount_item = DiscountItem.objects.all()
 
-        if pk != 0:
+        if not pk is None and pk != 0:
             list_discount_item = list_discount_item.filter(pk=pk)
-        else:
-            if discount != "null":
-                list_discount_item = list_discount_item.filter(discount__icontains=discount)
-            if product != 0:
-                list_discount_item = list_discount_item.filter(product=product)
+        if not discount is None and discount != 0:
+            list_discount_item = list_discount_item.filter(discount=discount)
+        if not product is None and product != 0:
+            list_discount_item = list_discount_item.filter(product=product)
 
-        mydata = GetProAttributeValueSerializer(list_discount_item, many=True)
+        mydata = GetDiscountItemSerializer(list_discount_item, many=True)
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
-
-class AddCategoryAPIView(APIView):
-
-    def post(self, request):
-        mydata = AddCategorySerializer(data=request.data)
-        if not mydata.is_valid():
-            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
-        name = mydata.data['name']
-        description = mydata.data['description']
-        cate = Category.objects.create(name=name, description=description)
-        return Response(data=cate.id, status=status.HTTP_200_OK)
 
 # Create your views here.

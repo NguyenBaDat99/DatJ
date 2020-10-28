@@ -5,17 +5,16 @@ from django.db import models
 from datetime import datetime
 
 
+class Gender(models.TextChoices):
+    MALE = 1
+    FEMALE = 2
+    OTHER = 3
+
 class Customer(models.Model):
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=255)
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=100, null=True, blank=True)
-
-    class Gender(models.TextChoices):
-        MALE = 1
-        FEMALE = 2
-        OTHER = 3
-
     gender = models.CharField(max_length=10, choices=Gender.choices, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
 

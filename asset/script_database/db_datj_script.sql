@@ -129,7 +129,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$216000$9ONlHM8W4Fjv$hmqQYZEWs1Gll9Nw/jX+6Yg/GNSma3LCDNI2QFOx6hU=','2020-10-25 13:30:22.000000',0,'admin','','','datzach31@gmail.com',1,1,'2020-10-10 17:32:59.000000'),(2,'pbkdf2_sha256$216000$6HW5gPENutmv$WaLVuuJwttPyB3KnF/sogGgiSCF+h3gB8EqtzykIU0g=','2020-10-13 14:21:18.721031',0,'nbdat22','','','',1,1,'2020-10-13 04:02:29.000000');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$216000$9ONlHM8W4Fjv$hmqQYZEWs1Gll9Nw/jX+6Yg/GNSma3LCDNI2QFOx6hU=','2020-10-28 03:07:25.665745',0,'admin','','','datzach31@gmail.com',1,1,'2020-10-10 17:32:59.000000');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `auth_user_groups` (
 
 LOCK TABLES `auth_user_groups` WRITE;
 /*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
-INSERT INTO `auth_user_groups` VALUES (3,1,1),(4,1,2),(5,1,3),(6,1,4),(1,2,1),(2,2,2);
+INSERT INTO `auth_user_groups` VALUES (3,1,1),(4,1,2),(5,1,3),(6,1,4);
 /*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +213,7 @@ CREATE TABLE `authtoken_token` (
 
 LOCK TABLES `authtoken_token` WRITE;
 /*!40000 ALTER TABLE `authtoken_token` DISABLE KEYS */;
-INSERT INTO `authtoken_token` VALUES ('26d5035e32d525ce261cbbbb6725cf5f407941d3','2020-10-21 15:17:39.622950',1),('f2631003193eabb6b6487aa5cdd51761c377da5f','2020-10-21 15:18:22.274341',2);
+INSERT INTO `authtoken_token` VALUES ('26d5035e32d525ce261cbbbb6725cf5f407941d3','2020-10-21 15:17:39.622950',1);
 /*!40000 ALTER TABLE `authtoken_token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,7 +243,7 @@ CREATE TABLE `customer_customer` (
 
 LOCK TABLES `customer_customer` WRITE;
 /*!40000 ALTER TABLE `customer_customer` DISABLE KEYS */;
-INSERT INTO `customer_customer` VALUES (3,'nbdat22','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Bá Đạt','null','MALE',NULL),(4,'dqdong26','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Quý Đông','null','MALE','1999-04-25'),(5,'tnanh23','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Ánh','null','FEMALE','1999-09-25'),(6,'vvnminh90','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Minh','null','FEMALE','1999-01-05'),(7,'dmkhoa60','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Khoa','null','MALE','1999-09-24');
+INSERT INTO `customer_customer` VALUES (3,'nbdat22','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Bá Đạt','null','MALE',NULL),(4,'dqdong26','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Quý Đông','null','MALE','1999-04-25'),(5,'tnanh23','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Ánh','null','FEMALE','1999-09-25'),(6,'vvnminh90','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Minh','null','FEMALE','1999-01-05'),(7,'dmkhoa60','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Khoa','khoa123@gmail.com','MALE','1999-09-24');
 /*!40000 ALTER TABLE `customer_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +275,7 @@ CREATE TABLE `customer_shipaddress` (
 
 LOCK TABLES `customer_shipaddress` WRITE;
 /*!40000 ALTER TABLE `customer_shipaddress` DISABLE KEYS */;
-INSERT INTO `customer_shipaddress` VALUES (1,'32','Đường số 3','Tân Thới Hiệp','12','Hồ Chí Minh','null',4),(3,'1092','Nguyễn Văn Quá','Đông Hưng Thuận','12','Hồ Chí Minh','null',3),(4,'21','Nguyễn Kiệm','Phường 09','Phú Nhuận','Hồ Chí Minh','null',7);
+INSERT INTO `customer_shipaddress` VALUES (1,'32','Đường số 3','Tân Thới Hiệp','12','Hồ Chí Minh','null',4),(3,'1092','Nguyễn Văn Quá','Đông Hưng Thuận','12','Hồ Chí Minh','test',3);
 /*!40000 ALTER TABLE `customer_shipaddress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +294,7 @@ CREATE TABLE `customer_telnumber` (
   PRIMARY KEY (`id`),
   KEY `customer_telnumber_customer_id_a0e7a355_fk_customer_customer_id` (`customer_id`),
   CONSTRAINT `customer_telnumber_customer_id_a0e7a355_fk_customer_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer_customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +303,7 @@ CREATE TABLE `customer_telnumber` (
 
 LOCK TABLES `customer_telnumber` WRITE;
 /*!40000 ALTER TABLE `customer_telnumber` DISABLE KEYS */;
-INSERT INTO `customer_telnumber` VALUES (1,'09324582147','null',3),(2,'0987255114','null',4),(3,'0987255114','Di động',5),(4,'0327255114','Di động',6),(5,'0927221474','Di động',7);
+INSERT INTO `customer_telnumber` VALUES (2,'0987255114','null',4),(3,'0987255114','Di động',5),(4,'0327255114','Di động',6),(5,'0927221474','Di động',7),(6,'0968122547','Di động',3);
 /*!40000 ALTER TABLE `customer_telnumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +332,7 @@ CREATE TABLE `customer_token` (
 
 LOCK TABLES `customer_token` WRITE;
 /*!40000 ALTER TABLE `customer_token` DISABLE KEYS */;
-INSERT INTO `customer_token` VALUES (1,'d1eee96b2ab7c79d34fd0808f7b3914774014e7599d1689754028485d2a24593',3,'2020-10-25 16:28:37.521060'),(2,'36b1bb3e15483c0f61000d8853d7ec7940c5c8b049d642e3c6dc988d59419ef8',4,'2020-10-24 15:38:23.971655'),(5,'6e549f179f9d3b8a6a52092f0c0f44f80b8587406e38c06a4a92c74ed02a11c9',7,'2020-10-24 15:57:44.963492');
+INSERT INTO `customer_token` VALUES (1,'2beac4ea8ace2f1b170cdd0685fe281d2972e758fa2393d489f0758c04b2f944',3,'2020-10-28 08:44:03.686871'),(2,'a3d3dc5292981d33ca61651aa72b32793347a54220d3741f7569572df5bdf6e2',4,'2020-10-28 08:55:59.203436'),(5,'5c116d3415b33df503879f428b78421472faade892958758a44666386a11dcbe',7,'2020-10-28 08:57:41.311139');
 /*!40000 ALTER TABLE `customer_token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,7 +358,7 @@ CREATE TABLE `django_admin_log` (
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,7 +367,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2020-10-13 03:53:33.553438','1','Nhân viên kho',1,'[{\"added\": {}}]',3,1),(2,'2020-10-13 04:02:30.187133','2','nbdat22',1,'[{\"added\": {}}]',4,1),(3,'2020-10-13 04:03:19.937908','2','nbdat22',2,'[{\"changed\": {\"fields\": [\"Groups\"]}}]',4,1),(4,'2020-10-13 04:03:29.838790','2','nbdat22',2,'[{\"changed\": {\"fields\": [\"Staff status\"]}}]',4,1),(5,'2020-10-13 04:06:20.596904','1','Nhân viên kho',2,'[{\"changed\": {\"fields\": [\"Permissions\"]}}]',3,1),(6,'2020-10-13 04:09:26.984838','2','Nhân viên thống kê đơn',1,'[{\"added\": {}}]',3,1),(7,'2020-10-13 14:15:17.957408','2','nbdat22',2,'[{\"changed\": {\"fields\": [\"Groups\"]}}]',4,1),(8,'2020-10-13 14:20:07.077018','3','Nhân viên nhân sự',1,'[{\"added\": {}}]',3,1),(9,'2020-10-13 14:20:35.075940','1','admin',2,'[{\"changed\": {\"fields\": [\"Superuser status\", \"Groups\"]}}]',4,1),(10,'2020-10-13 14:21:35.869819','1','admin',2,'[{\"changed\": {\"fields\": [\"Superuser status\"]}}]',4,1),(11,'2020-10-13 14:21:58.699707','3','Nhân viên nhân sự',2,'[{\"changed\": {\"fields\": [\"Permissions\"]}}]',3,1),(12,'2020-10-13 14:22:12.149405','1','admin',2,'[{\"changed\": {\"fields\": [\"Superuser status\"]}}]',4,1),(13,'2020-10-13 14:35:15.504992','1','Laptop',1,'[{\"added\": {}}]',9,1),(14,'2020-10-13 14:35:33.188341','2','Màn hình',1,'[{\"added\": {}}]',9,1),(15,'2020-10-13 14:35:42.687858','3','Bàn phím',1,'[{\"added\": {}}]',9,1),(16,'2020-10-13 14:35:47.066912','4','Chuột',1,'[{\"added\": {}}]',9,1),(17,'2020-10-13 14:35:57.468946','5','Tai nghe',1,'[{\"added\": {}}]',9,1),(18,'2020-10-13 14:36:38.918509','1','Asus',1,'[{\"added\": {}}]',11,1),(19,'2020-10-13 14:36:52.241434','2','Dell',1,'[{\"added\": {}}]',11,1),(20,'2020-10-13 14:36:56.128654','3','HP',1,'[{\"added\": {}}]',11,1),(21,'2020-10-13 14:56:48.410413','1','Thông số màn hình',1,'[{\"added\": {}}]',8,1),(22,'2020-10-13 14:57:14.973785','2','CPU',1,'[{\"added\": {}}]',8,1),(23,'2020-10-13 14:57:44.767062','3','Ram',1,'[{\"added\": {}}]',8,1),(24,'2020-10-13 14:58:00.599270','4','Ổ cứng',1,'[{\"added\": {}}]',8,1),(25,'2020-10-13 14:58:20.945735','5','Pin',1,'[{\"added\": {}}]',8,1),(26,'2020-10-13 14:58:53.461498','6','Ảnh',1,'[{\"added\": {}}]',8,1),(27,'2020-10-13 15:00:54.873055','1','ROG Zephyrus M GU502GU AZ090T',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" FHD (1920 x 1080) IPS, 100% sRGB, 240Hz, 3ms, 300nits, Pantone\\u00ae Validated, NanoEdge\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7-9750H 2.6GHz up to 4.5GHz 12MB\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"16GB DDR4 2666MHz Onboard (1x SO-DIMM socket, up to 32GB SDRAM)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"512GB SSD PCIE G3X4 (Support RAID 0) (2 slots)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 Cell 76WHr\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://product.hstatic.net/1000026716/product/og-zephyrus-m-laptop_gaming_asus_rog_zephyrus_s_gu502gu_az089t-black-2_3cea5ec698d14abe944331a246bcac4e.jpg\"}}]',13,1),(28,'2020-10-13 15:04:02.845780','2','Asus ROG Strix SCAR 15 G532L VAZ044T',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7-10875H 2.3GHz up to 5.1GHz 16MB\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"16GB (8GBx2) DDR4 3200MHz (2x SO-DIMM socket, up to 32GB SDRAM)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1TB SSD PCIE G3X4 (3 slot)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" FHD (1920 x 1080) IPS Non-Glare, NanoEdge, 100% sRGB, 300nits, 240Hz/3ms\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 Cell 66WHrs\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://product.hstatic.net/1000026716/product/r-15-g532l-vaz044t-i7-10875h_2_30905bbaa46845a2a0acca89e98e4eb9_grande_44248586cdba41eb8082d31af6051093.jpg\"}}]',13,1),(29,'2020-10-13 15:04:49.702540','1','Asus ROG Zephyrus M GU502GU AZ090T',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',13,1),(30,'2020-10-13 15:06:36.527353','3','Dell G3 Inspiron 3590 N5I5517W',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i5-9300H 2.4GHz up to 4.1GHz 8MB\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"2 x 4GB DDR4 2666MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"256GB SSD M.2 PCIE\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" FHD (1920 x 1080) IPS, Anti-Glarec\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"3 Cell 56WHr\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://product.hstatic.net/1000026716/product/ll-g3-inspiron-3590-n5i5517w_1_0c916cb24b5e4f328e249eb350768f22_master_3aa6f65982af408b913ab1f85f0f3b40.jpg\"}}]',13,1),(31,'2020-10-13 15:09:01.273002','4','Dell Inspiron G5 5590 N5590 4F4Y41',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7 9750Hc\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7 9750H\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"256GB SSD M.2 NVMe / 1TB HDD 5400RPM\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" IPS (1920 x 1080)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 cell 60 Wh Pin li\\u1ec1n\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"lh3.googleusercontent.com/LrhiDvauO8bqfTdGPoZ6uCIPtOmUCmpkzQ81ZeEFcXHklSDlNuXrbEy2WRAQ-V-c139mkJRD4l6gSGBQBFU=w1000-rw\"}}]',13,1),(32,'2020-10-13 15:11:48.604497','5','HP ENVY 13-aq1057TX',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"HP ENVY 13-aq1057TX\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1 x 8GB Onboard DDR4 2400MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"512GB SSD M.2 NVMe\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"13.3\\\" IPS (1920 x 1080)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 cell 53 Wh Pin li\\u1ec1n\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://lh3.googleusercontent.com/Mrj88XkDCITkh1iUfEE9kgALjHsvESvU0Irje4tAtzCiEYiMwT_RhpHpD3m1-3AR_s04sZcKbGAD6ae2Xydn=w1000-rw\"}}]',13,1),(33,'2020-10-13 15:13:52.722750','6','HP Pavilion 15-cs3008TU',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"HP Pavilion 15-cs3008TU\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1 x 4GB DDR4 2666MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1 x 4GB DDR4 2666MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" (1920 x 1080)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"3 cell 41 Wh Pin li\\u1ec1n\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://lh3.googleusercontent.com/gObfRF8xddJDDREli44AS77pfc9-DsYpdICgNj4IecqNDIlhv2uhHcBVdXQAKSZiKwAD6LzOju6NsmGF_w=w1000-rw\"}}]',13,1),(34,'2020-10-13 16:18:26.040851','6','msi',3,'',9,1),(35,'2020-10-25 13:32:03.051091','1','TEST01',1,'[{\"added\": {}}]',7,1),(36,'2020-10-25 13:32:33.509558','1','DiscountItem object (1)',1,'[{\"added\": {}}]',12,1),(37,'2020-10-25 13:32:47.504137','2','DiscountItem object (2)',1,'[{\"added\": {}}]',12,1),(38,'2020-10-25 13:40:45.299036','1','TEST01',2,'[{\"added\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (3)\"}}, {\"added\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (4)\"}}, {\"deleted\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (None)\"}}, {\"deleted\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (None)\"}}]',7,1),(39,'2020-10-25 13:46:39.414142','4','Nhân viên dịch vụ',1,'[{\"added\": {}}]',3,1),(40,'2020-10-25 13:46:48.767933','1','admin',2,'[{\"changed\": {\"fields\": [\"Groups\"]}}]',4,1),(41,'2020-10-25 13:47:57.521510','1','Viettel Post',1,'[{\"added\": {}}]',19,1),(42,'2020-10-25 13:48:23.486758','2','Giao hàng tiết kiệm',1,'[{\"added\": {}}]',19,1),(43,'2020-10-25 13:48:26.648586','3','DHL',1,'[{\"added\": {}}]',19,1),(44,'2020-10-25 13:48:42.979240','4','giaohangnhanh',1,'[{\"added\": {}}]',19,1),(45,'2020-10-25 13:49:03.918417','2','giaohangtietkiem.vn',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',19,1),(46,'2020-10-25 13:49:10.081680','4','giaohangnhanh.vn',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',19,1),(47,'2020-10-25 13:49:39.477226','5','EMS',1,'[{\"added\": {}}]',19,1),(48,'2020-10-25 13:50:02.960205','1','Thanh toán khi nhận hàng',1,'[{\"added\": {}}]',14,1),(49,'2020-10-25 13:50:10.453518','2','Momo',1,'[{\"added\": {}}]',14,1),(50,'2020-10-25 13:50:19.648696','3','Credit card',1,'[{\"added\": {}}]',14,1),(51,'2020-10-25 13:52:40.877697','4','Master card',1,'[{\"added\": {}}]',14,1),(52,'2020-10-25 13:53:14.170968','5','ATM card',1,'[{\"added\": {}}]',14,1),(53,'2020-10-25 13:53:20.364596','5','ATM Card',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',14,1),(54,'2020-10-25 13:53:29.598977','4','Master Card',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',14,1),(55,'2020-10-25 13:53:33.795885','3','Credit Card',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',14,1),(56,'2020-10-25 14:48:28.635453','1','TEST01',2,'[{\"changed\": {\"fields\": [\"Discount percent\"]}}]',7,1),(57,'2020-10-25 15:12:31.682810','1','TEST01',2,'[{\"changed\": {\"fields\": [\"On bill\"]}}]',7,1),(58,'2020-10-25 15:13:17.579089','1','TEST01',2,'[{\"changed\": {\"fields\": [\"Active\"]}}]',7,1),(59,'2020-10-25 15:13:33.413817','1','TEST01',2,'[{\"changed\": {\"fields\": [\"Active\"]}}]',7,1),(60,'2020-10-25 16:54:36.613864','2','Nhân viên thống kê đơn',2,'[{\"changed\": {\"fields\": [\"Permissions\"]}}]',3,1),(61,'2020-10-25 16:55:11.576783','4','Order-4-nbdat22-10/25/2020, 23:35:54',2,'[{\"changed\": {\"fields\": [\"Stage\"]}}]',18,1);
+INSERT INTO `django_admin_log` VALUES (1,'2020-10-13 03:53:33.553438','1','Nhân viên kho',1,'[{\"added\": {}}]',3,1),(2,'2020-10-13 04:02:30.187133','2','nbdat22',1,'[{\"added\": {}}]',4,1),(3,'2020-10-13 04:03:19.937908','2','nbdat22',2,'[{\"changed\": {\"fields\": [\"Groups\"]}}]',4,1),(4,'2020-10-13 04:03:29.838790','2','nbdat22',2,'[{\"changed\": {\"fields\": [\"Staff status\"]}}]',4,1),(5,'2020-10-13 04:06:20.596904','1','Nhân viên kho',2,'[{\"changed\": {\"fields\": [\"Permissions\"]}}]',3,1),(6,'2020-10-13 04:09:26.984838','2','Nhân viên thống kê đơn',1,'[{\"added\": {}}]',3,1),(7,'2020-10-13 14:15:17.957408','2','nbdat22',2,'[{\"changed\": {\"fields\": [\"Groups\"]}}]',4,1),(8,'2020-10-13 14:20:07.077018','3','Nhân viên nhân sự',1,'[{\"added\": {}}]',3,1),(9,'2020-10-13 14:20:35.075940','1','admin',2,'[{\"changed\": {\"fields\": [\"Superuser status\", \"Groups\"]}}]',4,1),(10,'2020-10-13 14:21:35.869819','1','admin',2,'[{\"changed\": {\"fields\": [\"Superuser status\"]}}]',4,1),(11,'2020-10-13 14:21:58.699707','3','Nhân viên nhân sự',2,'[{\"changed\": {\"fields\": [\"Permissions\"]}}]',3,1),(12,'2020-10-13 14:22:12.149405','1','admin',2,'[{\"changed\": {\"fields\": [\"Superuser status\"]}}]',4,1),(13,'2020-10-13 14:35:15.504992','1','Laptop',1,'[{\"added\": {}}]',9,1),(14,'2020-10-13 14:35:33.188341','2','Màn hình',1,'[{\"added\": {}}]',9,1),(15,'2020-10-13 14:35:42.687858','3','Bàn phím',1,'[{\"added\": {}}]',9,1),(16,'2020-10-13 14:35:47.066912','4','Chuột',1,'[{\"added\": {}}]',9,1),(17,'2020-10-13 14:35:57.468946','5','Tai nghe',1,'[{\"added\": {}}]',9,1),(18,'2020-10-13 14:36:38.918509','1','Asus',1,'[{\"added\": {}}]',11,1),(19,'2020-10-13 14:36:52.241434','2','Dell',1,'[{\"added\": {}}]',11,1),(20,'2020-10-13 14:36:56.128654','3','HP',1,'[{\"added\": {}}]',11,1),(21,'2020-10-13 14:56:48.410413','1','Thông số màn hình',1,'[{\"added\": {}}]',8,1),(22,'2020-10-13 14:57:14.973785','2','CPU',1,'[{\"added\": {}}]',8,1),(23,'2020-10-13 14:57:44.767062','3','Ram',1,'[{\"added\": {}}]',8,1),(24,'2020-10-13 14:58:00.599270','4','Ổ cứng',1,'[{\"added\": {}}]',8,1),(25,'2020-10-13 14:58:20.945735','5','Pin',1,'[{\"added\": {}}]',8,1),(26,'2020-10-13 14:58:53.461498','6','Ảnh',1,'[{\"added\": {}}]',8,1),(27,'2020-10-13 15:00:54.873055','1','ROG Zephyrus M GU502GU AZ090T',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" FHD (1920 x 1080) IPS, 100% sRGB, 240Hz, 3ms, 300nits, Pantone\\u00ae Validated, NanoEdge\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7-9750H 2.6GHz up to 4.5GHz 12MB\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"16GB DDR4 2666MHz Onboard (1x SO-DIMM socket, up to 32GB SDRAM)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"512GB SSD PCIE G3X4 (Support RAID 0) (2 slots)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 Cell 76WHr\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://product.hstatic.net/1000026716/product/og-zephyrus-m-laptop_gaming_asus_rog_zephyrus_s_gu502gu_az089t-black-2_3cea5ec698d14abe944331a246bcac4e.jpg\"}}]',13,1),(28,'2020-10-13 15:04:02.845780','2','Asus ROG Strix SCAR 15 G532L VAZ044T',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7-10875H 2.3GHz up to 5.1GHz 16MB\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"16GB (8GBx2) DDR4 3200MHz (2x SO-DIMM socket, up to 32GB SDRAM)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1TB SSD PCIE G3X4 (3 slot)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" FHD (1920 x 1080) IPS Non-Glare, NanoEdge, 100% sRGB, 300nits, 240Hz/3ms\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 Cell 66WHrs\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://product.hstatic.net/1000026716/product/r-15-g532l-vaz044t-i7-10875h_2_30905bbaa46845a2a0acca89e98e4eb9_grande_44248586cdba41eb8082d31af6051093.jpg\"}}]',13,1),(29,'2020-10-13 15:04:49.702540','1','Asus ROG Zephyrus M GU502GU AZ090T',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',13,1),(30,'2020-10-13 15:06:36.527353','3','Dell G3 Inspiron 3590 N5I5517W',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i5-9300H 2.4GHz up to 4.1GHz 8MB\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"2 x 4GB DDR4 2666MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"256GB SSD M.2 PCIE\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" FHD (1920 x 1080) IPS, Anti-Glarec\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"3 Cell 56WHr\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://product.hstatic.net/1000026716/product/ll-g3-inspiron-3590-n5i5517w_1_0c916cb24b5e4f328e249eb350768f22_master_3aa6f65982af408b913ab1f85f0f3b40.jpg\"}}]',13,1),(31,'2020-10-13 15:09:01.273002','4','Dell Inspiron G5 5590 N5590 4F4Y41',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7 9750Hc\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"Intel Core i7 9750H\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"256GB SSD M.2 NVMe / 1TB HDD 5400RPM\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" IPS (1920 x 1080)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 cell 60 Wh Pin li\\u1ec1n\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"lh3.googleusercontent.com/LrhiDvauO8bqfTdGPoZ6uCIPtOmUCmpkzQ81ZeEFcXHklSDlNuXrbEy2WRAQ-V-c139mkJRD4l6gSGBQBFU=w1000-rw\"}}]',13,1),(32,'2020-10-13 15:11:48.604497','5','HP ENVY 13-aq1057TX',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"HP ENVY 13-aq1057TX\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1 x 8GB Onboard DDR4 2400MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"512GB SSD M.2 NVMe\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"13.3\\\" IPS (1920 x 1080)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"4 cell 53 Wh Pin li\\u1ec1n\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://lh3.googleusercontent.com/Mrj88XkDCITkh1iUfEE9kgALjHsvESvU0Irje4tAtzCiEYiMwT_RhpHpD3m1-3AR_s04sZcKbGAD6ae2Xydn=w1000-rw\"}}]',13,1),(33,'2020-10-13 15:13:52.722750','6','HP Pavilion 15-cs3008TU',1,'[{\"added\": {}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"HP Pavilion 15-cs3008TU\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1 x 4GB DDR4 2666MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"1 x 4GB DDR4 2666MHz\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"15.6\\\" (1920 x 1080)\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"3 cell 41 Wh Pin li\\u1ec1n\"}}, {\"added\": {\"name\": \"product attribute value\", \"object\": \"https://lh3.googleusercontent.com/gObfRF8xddJDDREli44AS77pfc9-DsYpdICgNj4IecqNDIlhv2uhHcBVdXQAKSZiKwAD6LzOju6NsmGF_w=w1000-rw\"}}]',13,1),(34,'2020-10-13 16:18:26.040851','6','msi',3,'',9,1),(35,'2020-10-25 13:32:03.051091','1','TEST01',1,'[{\"added\": {}}]',7,1),(36,'2020-10-25 13:32:33.509558','1','DiscountItem object (1)',1,'[{\"added\": {}}]',12,1),(37,'2020-10-25 13:32:47.504137','2','DiscountItem object (2)',1,'[{\"added\": {}}]',12,1),(38,'2020-10-25 13:40:45.299036','1','TEST01',2,'[{\"added\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (3)\"}}, {\"added\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (4)\"}}, {\"deleted\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (None)\"}}, {\"deleted\": {\"name\": \"discount item\", \"object\": \"DiscountItem object (None)\"}}]',7,1),(39,'2020-10-25 13:46:39.414142','4','Nhân viên dịch vụ',1,'[{\"added\": {}}]',3,1),(40,'2020-10-25 13:46:48.767933','1','admin',2,'[{\"changed\": {\"fields\": [\"Groups\"]}}]',4,1),(41,'2020-10-25 13:47:57.521510','1','Viettel Post',1,'[{\"added\": {}}]',19,1),(42,'2020-10-25 13:48:23.486758','2','Giao hàng tiết kiệm',1,'[{\"added\": {}}]',19,1),(43,'2020-10-25 13:48:26.648586','3','DHL',1,'[{\"added\": {}}]',19,1),(44,'2020-10-25 13:48:42.979240','4','giaohangnhanh',1,'[{\"added\": {}}]',19,1),(45,'2020-10-25 13:49:03.918417','2','giaohangtietkiem.vn',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',19,1),(46,'2020-10-25 13:49:10.081680','4','giaohangnhanh.vn',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',19,1),(47,'2020-10-25 13:49:39.477226','5','EMS',1,'[{\"added\": {}}]',19,1),(48,'2020-10-25 13:50:02.960205','1','Thanh toán khi nhận hàng',1,'[{\"added\": {}}]',14,1),(49,'2020-10-25 13:50:10.453518','2','Momo',1,'[{\"added\": {}}]',14,1),(50,'2020-10-25 13:50:19.648696','3','Credit card',1,'[{\"added\": {}}]',14,1),(51,'2020-10-25 13:52:40.877697','4','Master card',1,'[{\"added\": {}}]',14,1),(52,'2020-10-25 13:53:14.170968','5','ATM card',1,'[{\"added\": {}}]',14,1),(53,'2020-10-25 13:53:20.364596','5','ATM Card',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',14,1),(54,'2020-10-25 13:53:29.598977','4','Master Card',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',14,1),(55,'2020-10-25 13:53:33.795885','3','Credit Card',2,'[{\"changed\": {\"fields\": [\"Name\"]}}]',14,1),(56,'2020-10-25 14:48:28.635453','1','TEST01',2,'[{\"changed\": {\"fields\": [\"Discount percent\"]}}]',7,1),(57,'2020-10-25 15:12:31.682810','1','TEST01',2,'[{\"changed\": {\"fields\": [\"On bill\"]}}]',7,1),(58,'2020-10-25 15:13:17.579089','1','TEST01',2,'[{\"changed\": {\"fields\": [\"Active\"]}}]',7,1),(59,'2020-10-25 15:13:33.413817','1','TEST01',2,'[{\"changed\": {\"fields\": [\"Active\"]}}]',7,1),(60,'2020-10-25 16:54:36.613864','2','Nhân viên thống kê đơn',2,'[{\"changed\": {\"fields\": [\"Permissions\"]}}]',3,1),(61,'2020-10-25 16:55:11.576783','4','Order-4-nbdat22-10/25/2020, 23:35:54',2,'[{\"changed\": {\"fields\": [\"Stage\"]}}]',18,1),(62,'2020-10-28 03:17:24.418715','2','Asus ROG Strix SCAR 15 G532L VAZ044T',2,'[{\"changed\": {\"fields\": [\"Unit in order\"]}}]',13,1),(63,'2020-10-28 06:41:51.744732','2','Asus ROG Strix SCAR 15 G532L VAZ044T',2,'[{\"changed\": {\"fields\": [\"Unit in stock\", \"Unit in order\"]}}]',13,1),(64,'2020-10-28 06:41:55.739624','1','Asus ROG Zephyrus M GU502GU AZ090T',2,'[]',13,1),(65,'2020-10-28 10:12:20.034229','2','Asus11',1,'[{\"added\": {}}, {\"added\": {\"name\": \"discount item\", \"object\": \"Asus11 - Asus ROG Zephyrus M GU502GU AZ090T\"}}, {\"added\": {\"name\": \"discount item\", \"object\": \"Asus11 - Asus ROG Strix SCAR 15 G532L VAZ044T\"}}]',7,1),(66,'2020-10-28 10:13:01.940210','3','CEL10',1,'[{\"added\": {}}]',7,1),(67,'2020-10-28 10:13:23.157287','2','nbdat22',3,'',4,1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -410,7 +410,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -419,7 +419,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2020-10-10 15:06:07.791779'),(2,'auth','0001_initial','2020-10-10 15:06:08.136303'),(3,'admin','0001_initial','2020-10-10 15:06:09.126429'),(4,'admin','0002_logentry_remove_auto_add','2020-10-10 15:06:09.313547'),(5,'admin','0003_logentry_add_action_flag_choices','2020-10-10 15:06:09.322570'),(6,'contenttypes','0002_remove_content_type_name','2020-10-10 15:06:09.459979'),(7,'auth','0002_alter_permission_name_max_length','2020-10-10 15:06:09.548743'),(8,'auth','0003_alter_user_email_max_length','2020-10-10 15:06:09.570798'),(9,'auth','0004_alter_user_username_opts','2020-10-10 15:06:09.578748'),(10,'auth','0005_alter_user_last_login_null','2020-10-10 15:06:09.663291'),(11,'auth','0006_require_contenttypes_0002','2020-10-10 15:06:09.667185'),(12,'auth','0007_alter_validators_add_error_messages','2020-10-10 15:06:09.675456'),(13,'auth','0008_alter_user_username_max_length','2020-10-10 15:06:09.886511'),(14,'auth','0009_alter_user_last_name_max_length','2020-10-10 15:06:10.060073'),(15,'auth','0010_alter_group_name_max_length','2020-10-10 15:06:10.078844'),(16,'auth','0011_update_proxy_permissions','2020-10-10 15:06:10.087177'),(17,'auth','0012_alter_user_first_name_max_length','2020-10-10 15:06:10.194888'),(18,'sessions','0001_initial','2020-10-10 15:06:10.228734'),(19,'customer','0001_initial','2020-10-10 17:32:09.451897'),(20,'product','0001_initial','2020-10-10 17:32:09.891227'),(21,'order','0001_initial','2020-10-10 17:32:10.991979'),(22,'order','0002_auto_20201011_0044','2020-10-10 17:44:31.208494'),(23,'product','0002_auto_20201011_0044','2020-10-10 17:44:31.214533'),(24,'order','0003_auto_20201012_1006','2020-10-12 03:06:52.507471'),(25,'product','0003_auto_20201012_1006','2020-10-12 03:06:52.625520'),(26,'order','0004_auto_20201013_2325','2020-10-13 16:25:20.362587'),(27,'product','0004_auto_20201013_2325','2020-10-13 16:25:20.370524'),(28,'order','0005_auto_20201019_1512','2020-10-19 08:12:37.306021'),(29,'product','0005_auto_20201019_1512','2020-10-19 08:12:37.542485'),(30,'authtoken','0001_initial','2020-10-21 15:01:54.299450'),(31,'authtoken','0002_auto_20160226_1747','2020-10-21 15:01:54.548761'),(32,'authtoken','0003_tokenproxy','2020-10-21 15:01:54.554713'),(33,'order','0006_auto_20201021_2201','2020-10-21 15:01:54.566426'),(34,'product','0006_auto_20201021_2201','2020-10-21 15:01:54.767762'),(35,'order','0007_auto_20201022_1520','2020-10-22 08:20:46.645913'),(36,'product','0007_auto_20201022_1520','2020-10-22 08:20:46.661130'),(37,'customer','0002_token','2020-10-24 15:18:51.695737'),(38,'order','0008_auto_20201024_2218','2020-10-24 15:18:51.783057'),(39,'product','0008_auto_20201024_2218','2020-10-24 15:18:51.789466'),(40,'customer','0003_token_created','2020-10-24 15:34:03.351341'),(41,'order','0009_auto_20201024_2233','2020-10-24 15:34:03.360317'),(42,'product','0009_auto_20201024_2233','2020-10-24 15:34:03.365916'),(43,'customer','0004_auto_20201024_2250','2020-10-24 15:50:16.981436'),(44,'order','0010_auto_20201024_2250','2020-10-24 15:50:16.991051'),(45,'product','0010_auto_20201024_2250','2020-10-24 15:50:16.996359'),(46,'customer','0005_auto_20201025_1434','2020-10-25 07:35:03.614104'),(47,'order','0011_auto_20201025_1434','2020-10-25 07:35:03.708230'),(48,'product','0011_auto_20201025_1434','2020-10-25 07:35:03.715276'),(49,'customer','0006_auto_20201025_2308','2020-10-25 16:08:27.397234'),(50,'order','0012_auto_20201025_2308','2020-10-25 16:08:27.501543'),(51,'product','0012_auto_20201025_2308','2020-10-25 16:08:27.529740'),(52,'customer','0007_auto_20201025_2322','2020-10-25 16:22:33.890390'),(53,'order','0013_auto_20201025_2322','2020-10-25 16:22:33.990281'),(54,'product','0013_auto_20201025_2322','2020-10-25 16:22:33.996266'),(55,'customer','0008_auto_20201025_2334','2020-10-25 16:34:43.916134'),(56,'order','0014_auto_20201025_2334','2020-10-25 16:34:43.930097'),(57,'product','0014_auto_20201025_2334','2020-10-25 16:34:43.936081');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2020-10-10 15:06:07.791779'),(2,'auth','0001_initial','2020-10-10 15:06:08.136303'),(3,'admin','0001_initial','2020-10-10 15:06:09.126429'),(4,'admin','0002_logentry_remove_auto_add','2020-10-10 15:06:09.313547'),(5,'admin','0003_logentry_add_action_flag_choices','2020-10-10 15:06:09.322570'),(6,'contenttypes','0002_remove_content_type_name','2020-10-10 15:06:09.459979'),(7,'auth','0002_alter_permission_name_max_length','2020-10-10 15:06:09.548743'),(8,'auth','0003_alter_user_email_max_length','2020-10-10 15:06:09.570798'),(9,'auth','0004_alter_user_username_opts','2020-10-10 15:06:09.578748'),(10,'auth','0005_alter_user_last_login_null','2020-10-10 15:06:09.663291'),(11,'auth','0006_require_contenttypes_0002','2020-10-10 15:06:09.667185'),(12,'auth','0007_alter_validators_add_error_messages','2020-10-10 15:06:09.675456'),(13,'auth','0008_alter_user_username_max_length','2020-10-10 15:06:09.886511'),(14,'auth','0009_alter_user_last_name_max_length','2020-10-10 15:06:10.060073'),(15,'auth','0010_alter_group_name_max_length','2020-10-10 15:06:10.078844'),(16,'auth','0011_update_proxy_permissions','2020-10-10 15:06:10.087177'),(17,'auth','0012_alter_user_first_name_max_length','2020-10-10 15:06:10.194888'),(18,'sessions','0001_initial','2020-10-10 15:06:10.228734'),(19,'customer','0001_initial','2020-10-10 17:32:09.451897'),(20,'product','0001_initial','2020-10-10 17:32:09.891227'),(21,'order','0001_initial','2020-10-10 17:32:10.991979'),(22,'order','0002_auto_20201011_0044','2020-10-10 17:44:31.208494'),(23,'product','0002_auto_20201011_0044','2020-10-10 17:44:31.214533'),(24,'order','0003_auto_20201012_1006','2020-10-12 03:06:52.507471'),(25,'product','0003_auto_20201012_1006','2020-10-12 03:06:52.625520'),(26,'order','0004_auto_20201013_2325','2020-10-13 16:25:20.362587'),(27,'product','0004_auto_20201013_2325','2020-10-13 16:25:20.370524'),(28,'order','0005_auto_20201019_1512','2020-10-19 08:12:37.306021'),(29,'product','0005_auto_20201019_1512','2020-10-19 08:12:37.542485'),(30,'authtoken','0001_initial','2020-10-21 15:01:54.299450'),(31,'authtoken','0002_auto_20160226_1747','2020-10-21 15:01:54.548761'),(32,'authtoken','0003_tokenproxy','2020-10-21 15:01:54.554713'),(33,'order','0006_auto_20201021_2201','2020-10-21 15:01:54.566426'),(34,'product','0006_auto_20201021_2201','2020-10-21 15:01:54.767762'),(35,'order','0007_auto_20201022_1520','2020-10-22 08:20:46.645913'),(36,'product','0007_auto_20201022_1520','2020-10-22 08:20:46.661130'),(37,'customer','0002_token','2020-10-24 15:18:51.695737'),(38,'order','0008_auto_20201024_2218','2020-10-24 15:18:51.783057'),(39,'product','0008_auto_20201024_2218','2020-10-24 15:18:51.789466'),(40,'customer','0003_token_created','2020-10-24 15:34:03.351341'),(41,'order','0009_auto_20201024_2233','2020-10-24 15:34:03.360317'),(42,'product','0009_auto_20201024_2233','2020-10-24 15:34:03.365916'),(43,'customer','0004_auto_20201024_2250','2020-10-24 15:50:16.981436'),(44,'order','0010_auto_20201024_2250','2020-10-24 15:50:16.991051'),(45,'product','0010_auto_20201024_2250','2020-10-24 15:50:16.996359'),(46,'customer','0005_auto_20201025_1434','2020-10-25 07:35:03.614104'),(47,'order','0011_auto_20201025_1434','2020-10-25 07:35:03.708230'),(48,'product','0011_auto_20201025_1434','2020-10-25 07:35:03.715276'),(49,'customer','0006_auto_20201025_2308','2020-10-25 16:08:27.397234'),(50,'order','0012_auto_20201025_2308','2020-10-25 16:08:27.501543'),(51,'product','0012_auto_20201025_2308','2020-10-25 16:08:27.529740'),(52,'customer','0007_auto_20201025_2322','2020-10-25 16:22:33.890390'),(53,'order','0013_auto_20201025_2322','2020-10-25 16:22:33.990281'),(54,'product','0013_auto_20201025_2322','2020-10-25 16:22:33.996266'),(55,'customer','0008_auto_20201025_2334','2020-10-25 16:34:43.916134'),(56,'order','0014_auto_20201025_2334','2020-10-25 16:34:43.930097'),(57,'product','0014_auto_20201025_2334','2020-10-25 16:34:43.936081'),(58,'customer','0009_auto_20201027_2155','2020-10-27 14:56:04.923102'),(59,'order','0015_auto_20201027_2155','2020-10-27 14:56:05.069130'),(60,'product','0015_auto_20201027_2155','2020-10-27 14:56:05.074556'),(61,'customer','0010_auto_20201027_2239','2020-10-27 15:39:32.082067'),(62,'order','0016_auto_20201027_2239','2020-10-27 15:39:32.091635'),(63,'product','0016_auto_20201027_2239','2020-10-27 15:39:32.097608'),(64,'customer','0011_auto_20201027_2300','2020-10-27 16:00:40.069635'),(65,'order','0017_auto_20201027_2300','2020-10-27 16:00:40.080954'),(66,'product','0017_auto_20201027_2300','2020-10-27 16:00:40.086897'),(67,'customer','0002_auto_20201027_2312','2020-10-27 16:12:07.424512'),(68,'order','0002_auto_20201027_2312','2020-10-27 16:12:07.447495'),(69,'product','0002_auto_20201027_2312','2020-10-27 16:12:07.453629'),(70,'customer','0002_auto_20201027_2316','2020-10-27 16:17:07.751827'),(71,'order','0002_auto_20201027_2316','2020-10-27 16:17:07.863866'),(72,'product','0002_auto_20201027_2316','2020-10-27 16:17:07.869878'),(73,'customer','0003_auto_20201028_1715','2020-10-28 10:15:18.957105'),(74,'order','0003_auto_20201028_1715','2020-10-28 10:15:18.969918'),(75,'product','0003_auto_20201028_1715','2020-10-28 10:15:18.978289');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,7 +445,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('dj99ac2xa76k93r320ov6npcwgzji7p7','.eJxVjEEOwiAQRe_C2pCBAqUu3fcMZDoMUjU0Ke3KeHdp0oVu33v_v0XAfcthr7yGOYqrUOLyyyakJ5dDxAeW-yJpKds6T_JI5GmrHJfIr9vZ_h1krLmtNQ1eARlib5KlARBiDxrZWwsqNeV671EntuyUIhMbBuo0WA2dc-LzBc-HNsM:1kWg6I:4Ya3Lz5xQJfp_LA4NBaMMtzsl4ijSqSbDrXmTNIrvFg','2020-11-08 13:30:22.181530');
+INSERT INTO `django_session` VALUES ('92ie37g1fb7aca10mbq78aurscvocmli','.eJxVjEEOwiAQRe_C2pCBAqUu3fcMZDoMUjU0Ke3KeHdp0oVu33v_v0XAfcthr7yGOYqrUOLyyyakJ5dDxAeW-yJpKds6T_JI5GmrHJfIr9vZ_h1krLmtNQ1eARlib5KlARBiDxrZWwsqNeV671EntuyUIhMbBuo0WA2dc-LzBc-HNsM:1kXbo5:Sao6MugUeoRo-L4DoxN4p3w2fts7P0GVPbNbGaBYryw','2020-11-11 03:07:25.671697'),('dj99ac2xa76k93r320ov6npcwgzji7p7','.eJxVjEEOwiAQRe_C2pCBAqUu3fcMZDoMUjU0Ke3KeHdp0oVu33v_v0XAfcthr7yGOYqrUOLyyyakJ5dDxAeW-yJpKds6T_JI5GmrHJfIr9vZ_h1krLmtNQ1eARlib5KlARBiDxrZWwsqNeV671EntuyUIhMbBuo0WA2dc-LzBc-HNsM:1kWg6I:4Ya3Lz5xQJfp_LA4NBaMMtzsl4ijSqSbDrXmTNIrvFg','2020-11-08 13:30:22.181530');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +463,7 @@ CREATE TABLE `order_cart` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `customer_id` (`customer_id`),
   CONSTRAINT `order_cart_customer_id_6237d072_fk_customer_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer_customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,7 +472,7 @@ CREATE TABLE `order_cart` (
 
 LOCK TABLES `order_cart` WRITE;
 /*!40000 ALTER TABLE `order_cart` DISABLE KEYS */;
-INSERT INTO `order_cart` VALUES (10,0,3);
+INSERT INTO `order_cart` VALUES (14,0,7);
 /*!40000 ALTER TABLE `order_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -494,7 +494,7 @@ CREATE TABLE `order_cartitem` (
   KEY `order_cartitem_product_id_ad323e40_fk_product_product_id` (`product_id`),
   CONSTRAINT `order_cartitem_cart_id_9b4c287a_fk_order_cart_id` FOREIGN KEY (`cart_id`) REFERENCES `order_cart` (`id`),
   CONSTRAINT `order_cartitem_product_id_ad323e40_fk_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product_product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -528,16 +528,19 @@ CREATE TABLE `order_order` (
   `ship_to_id` int DEFAULT NULL,
   `total_actual_price` double NOT NULL,
   `total_price` double NOT NULL,
+  `contact_tel_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `order_order_payment_type_id_93f93be0_fk_order_paymentservice_id` (`payment_type_id`),
   KEY `order_order_ship_by_id_fe47631c_fk_order_shipservice_id` (`ship_by_id`),
   KEY `order_order_ship_to_id_b22407ea_fk_customer_shipaddress_id` (`ship_to_id`),
   KEY `order_order_customer_id_5bbbd957_fk_customer_customer_id` (`customer_id`),
+  KEY `order_order_contact_tel_id_8b053b1f_fk_customer_telnumber_id` (`contact_tel_id`),
+  CONSTRAINT `order_order_contact_tel_id_8b053b1f_fk_customer_telnumber_id` FOREIGN KEY (`contact_tel_id`) REFERENCES `customer_telnumber` (`id`),
   CONSTRAINT `order_order_customer_id_5bbbd957_fk_customer_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer_customer` (`id`),
   CONSTRAINT `order_order_payment_type_id_93f93be0_fk_order_paymentservice_id` FOREIGN KEY (`payment_type_id`) REFERENCES `order_paymentservice` (`id`),
   CONSTRAINT `order_order_ship_by_id_fe47631c_fk_order_shipservice_id` FOREIGN KEY (`ship_by_id`) REFERENCES `order_shipservice` (`id`),
   CONSTRAINT `order_order_ship_to_id_b22407ea_fk_customer_shipaddress_id` FOREIGN KEY (`ship_to_id`) REFERENCES `customer_shipaddress` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -546,7 +549,6 @@ CREATE TABLE `order_order` (
 
 LOCK TABLES `order_order` WRITE;
 /*!40000 ALTER TABLE `order_order` DISABLE KEYS */;
-INSERT INTO `order_order` VALUES (3,'2020-11-01 16:25:21.707799','2020-10-25 16:25:21.708774','TEST01',3499000,'2020-10-25 16:25:21.708774','Processing',NULL,4,2,2,1,76481000,79980000),(4,'2020-11-01 16:35:54.000000','2020-11-01 16:35:54.000000','TEST01',9196000,'2020-10-25 16:35:54.000000','Shipping',NULL,3,1,3,3,50274000,59470000),(5,'2020-11-01 16:39:54.313841','2020-10-25 16:39:54.313841','TEST01',13996000,'2020-10-25 16:39:54.313841','Processing',NULL,3,4,3,3,88974000,102970000),(6,'2020-11-01 16:41:01.770011','2020-10-25 16:41:01.770011','TEST01',2299000,'2020-10-25 16:41:01.770011','Processing',NULL,3,4,3,3,65681000,67980000),(7,'2020-11-01 16:41:47.616276','2020-10-25 16:41:47.616276','TEST01',2299000,'2020-10-25 16:41:47.616276','Processing',NULL,3,4,3,3,20691000,22990000),(8,'2020-11-01 16:42:22.793857','2020-10-25 16:42:22.793857','TEST01',3499000,'2020-10-25 16:42:22.793857','Processing',NULL,3,4,3,3,31491000,34990000),(9,'2020-11-01 16:44:34.624552','2020-10-25 16:44:34.624552','TEST01',13996000,'2020-10-25 16:44:34.624552','Processing',NULL,7,5,2,4,55984000,69980000);
 /*!40000 ALTER TABLE `order_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -560,7 +562,7 @@ DROP TABLE IF EXISTS `order_orderdetail`;
 CREATE TABLE `order_orderdetail` (
   `id` int NOT NULL AUTO_INCREMENT,
   `quantity` int NOT NULL,
-  `discount_code` varchar(30) NOT NULL,
+  `discount_code` varchar(30) DEFAULT NULL,
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `unit_price` double NOT NULL,
@@ -571,7 +573,7 @@ CREATE TABLE `order_orderdetail` (
   KEY `order_orderdetail_product_id_76983dc0_fk_product_product_id` (`product_id`),
   CONSTRAINT `order_orderdetail_order_id_2c6526df_fk_order_order_id` FOREIGN KEY (`order_id`) REFERENCES `order_order` (`id`),
   CONSTRAINT `order_orderdetail_product_id_76983dc0_fk_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product_product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -580,7 +582,6 @@ CREATE TABLE `order_orderdetail` (
 
 LOCK TABLES `order_orderdetail` WRITE;
 /*!40000 ALTER TABLE `order_orderdetail` DISABLE KEYS */;
-INSERT INTO `order_orderdetail` VALUES (2,1,'TEST01',3,2,44990000,0,44990000),(3,1,'TEST01',3,4,34990000,3499000,31491000),(4,1,'TEST01',4,6,13490000,0,13490000),(5,2,'TEST01',4,3,45980000,9196000,36784000),(6,2,'TEST01',5,4,69980000,13996000,55984000),(7,1,'TEST01',5,1,32990000,0,32990000),(8,1,'TEST01',6,2,44990000,0,44990000),(9,1,'TEST01',6,3,22990000,2299000,20691000),(10,1,'TEST01',7,3,22990000,2299000,20691000),(11,1,'TEST01',8,4,34990000,3499000,31491000),(12,2,'TEST01',9,4,69980000,13996000,55984000);
 /*!40000 ALTER TABLE `order_orderdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -679,7 +680,7 @@ CREATE TABLE `product_discount` (
   `end_date` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `product_discount_code_ee4d649a_uniq` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -688,7 +689,7 @@ CREATE TABLE `product_discount` (
 
 LOCK TABLES `product_discount` WRITE;
 /*!40000 ALTER TABLE `product_discount` DISABLE KEYS */;
-INSERT INTO `product_discount` VALUES (1,'TEST01',0.1,0,1,'2020-10-25 13:28:39.000000','2020-10-27 13:32:01.000000');
+INSERT INTO `product_discount` VALUES (1,'TEST01',0.1,0,1,'2020-10-25 13:28:39.000000','2020-10-27 13:32:01.000000'),(2,'Asus11',0.15,0,1,'2020-10-28 10:07:41.000000',NULL),(3,'CEL10',0.16,1,1,'2020-10-28 10:07:41.000000',NULL);
 /*!40000 ALTER TABLE `product_discount` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -708,7 +709,7 @@ CREATE TABLE `product_discountitem` (
   KEY `product_discountitem_product_id_505506fc_fk_product_product_id` (`product_id`),
   CONSTRAINT `product_discountitem_discount_id_31f6b572_fk_product_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `product_discount` (`id`),
   CONSTRAINT `product_discountitem_product_id_505506fc_fk_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product_product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -717,7 +718,7 @@ CREATE TABLE `product_discountitem` (
 
 LOCK TABLES `product_discountitem` WRITE;
 /*!40000 ALTER TABLE `product_discountitem` DISABLE KEYS */;
-INSERT INTO `product_discountitem` VALUES (3,1,3),(4,1,4);
+INSERT INTO `product_discountitem` VALUES (3,1,3),(4,1,4),(5,2,1),(6,2,2);
 /*!40000 ALTER TABLE `product_discountitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -744,31 +745,6 @@ LOCK TABLES `product_manufacturer` WRITE;
 /*!40000 ALTER TABLE `product_manufacturer` DISABLE KEYS */;
 INSERT INTO `product_manufacturer` VALUES (1,'Asus',NULL),(2,'Dell',NULL),(3,'HP',NULL);
 /*!40000 ALTER TABLE `product_manufacturer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `product_manufacturers`
---
-
-DROP TABLE IF EXISTS `product_manufacturers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product_manufacturers` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `description` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `product_manufacturers`
---
-
-LOCK TABLES `product_manufacturers` WRITE;
-/*!40000 ALTER TABLE `product_manufacturers` DISABLE KEYS */;
-INSERT INTO `product_manufacturers` VALUES (1,'Asus',NULL),(2,'Dell',NULL),(3,'HP',NULL);
-/*!40000 ALTER TABLE `product_manufacturers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -802,7 +778,7 @@ CREATE TABLE `product_product` (
 
 LOCK TABLES `product_product` WRITE;
 /*!40000 ALTER TABLE `product_product` DISABLE KEYS */;
-INSERT INTO `product_product` VALUES (1,'Asus ROG Zephyrus M GU502GU AZ090T',32990000,0,1,NULL,1,1,20),(2,'Asus ROG Strix SCAR 15 G532L VAZ044T',44990000,0,1,NULL,1,1,15),(3,'Dell G3 Inspiron 3590 N5I5517W',22990000,0,1,NULL,1,2,30),(4,'Dell Inspiron G5 5590 N5590 4F4Y41',34990000,0,1,NULL,1,2,18),(5,'HP ENVY 13-aq1057TX',29690000,0,1,NULL,1,3,23),(6,'HP Pavilion 15-cs3008TU',13490000,0,1,NULL,1,3,24);
+INSERT INTO `product_product` VALUES (1,'Asus ROG Zephyrus M GU502GU AZ090T',32990000,0,1,NULL,1,1,20),(2,'Asus ROG Strix SCAR 15 G532L VAZ044T',44990000,0,1,NULL,1,1,15),(3,'Dell G3 Inspiron 3590 N5I5517W',22990000,0,1,NULL,1,2,30),(4,'Dell Inspiron G5 5590 N5590 4F4Y41',34990000,0,1,NULL,1,2,15),(5,'HP ENVY 13-aq1057TX',29690000,0,1,NULL,1,3,23),(6,'HP Pavilion 15-cs3008TU',13490000,0,1,NULL,1,3,24);
 /*!40000 ALTER TABLE `product_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -870,4 +846,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-26 21:53:16
+-- Dump completed on 2020-10-28 17:17:21

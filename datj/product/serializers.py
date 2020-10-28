@@ -8,7 +8,7 @@ class GetCategorySerializer(serializers.ModelSerializer):
         fields = ('pk', 'name', 'description', 'category_belong',)
 
 
-class GetManufacturersSerializer(serializers.ModelSerializer):
+class GetManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Manufacturer
         fields = ('pk', 'name', 'description',)
@@ -44,11 +44,6 @@ class GetProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('pk', 'name', 'category', 'manufacturer',
                   'price', 'unit_in_stock', 'unit_in_order', 'active', 'description',)
-
-
-class AddCategorySerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=50)
-    description = serializers.CharField(max_length=200)
 
 
 class KeywordSerializer(serializers.Serializer):
