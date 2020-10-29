@@ -234,7 +234,7 @@ CREATE TABLE `customer_customer` (
   `date_of_birth` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `customer_customer_username_0781c93f_uniq` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +243,7 @@ CREATE TABLE `customer_customer` (
 
 LOCK TABLES `customer_customer` WRITE;
 /*!40000 ALTER TABLE `customer_customer` DISABLE KEYS */;
-INSERT INTO `customer_customer` VALUES (3,'nbdat22','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Bá Đạt','null','MALE',NULL),(4,'dqdong26','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Quý Đông','null','MALE','1999-04-25'),(5,'tnanh23','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Ánh','null','FEMALE','1999-09-25'),(6,'vvnminh90','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Minh','null','FEMALE','1999-01-05'),(7,'dmkhoa60','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Khoa','khoa123@gmail.com','MALE','1999-09-24');
+INSERT INTO `customer_customer` VALUES (3,'nbdat22','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Bá Đạt','dat123@gmail.com','MALE','1996-02-29'),(4,'dqdong26','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Quý Đông','null','MALE','1999-04-25'),(5,'tnanh23','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Ánh','null','FEMALE','1999-09-25'),(6,'vvnminh90','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Minh','null','FEMALE','1999-01-05'),(7,'dmkhoa60','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Khoa','khoa123@gmail.com','MALE','1999-09-24'),(8,'testAcc','6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b','Testing','null','MALE','1999-09-24');
 /*!40000 ALTER TABLE `customer_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +266,7 @@ CREATE TABLE `customer_shipaddress` (
   PRIMARY KEY (`id`),
   KEY `customer_shipaddress_customer_id_6580374c_fk_customer_` (`customer_id`),
   CONSTRAINT `customer_shipaddress_customer_id_6580374c_fk_customer_` FOREIGN KEY (`customer_id`) REFERENCES `customer_customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +275,7 @@ CREATE TABLE `customer_shipaddress` (
 
 LOCK TABLES `customer_shipaddress` WRITE;
 /*!40000 ALTER TABLE `customer_shipaddress` DISABLE KEYS */;
-INSERT INTO `customer_shipaddress` VALUES (1,'32','Đường số 3','Tân Thới Hiệp','12','Hồ Chí Minh','null',4),(3,'1092','Nguyễn Văn Quá','Đông Hưng Thuận','12','Hồ Chí Minh','test',3);
+INSERT INTO `customer_shipaddress` VALUES (1,'32','Đường số 3','Tân Thới Hiệp','12','Hồ Chí Minh','null',4),(3,'1092','Nguyễn Văn Quá','Đông Hưng Thuận','12','Hồ Chí Minh','test',3),(5,'21','Nguyễn Kiệm','Phường 09','Phú Nhuận','Hồ Chí Minh','null',3);
 /*!40000 ALTER TABLE `customer_shipaddress` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +294,7 @@ CREATE TABLE `customer_telnumber` (
   PRIMARY KEY (`id`),
   KEY `customer_telnumber_customer_id_a0e7a355_fk_customer_customer_id` (`customer_id`),
   CONSTRAINT `customer_telnumber_customer_id_a0e7a355_fk_customer_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer_customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +303,7 @@ CREATE TABLE `customer_telnumber` (
 
 LOCK TABLES `customer_telnumber` WRITE;
 /*!40000 ALTER TABLE `customer_telnumber` DISABLE KEYS */;
-INSERT INTO `customer_telnumber` VALUES (2,'0987255114','null',4),(3,'0987255114','Di động',5),(4,'0327255114','Di động',6),(5,'0927221474','Di động',7),(6,'0968122547','Di động',3);
+INSERT INTO `customer_telnumber` VALUES (2,'0987255114','null',4),(3,'0987255114','Di động',5),(4,'0327255114','Di động',6),(5,'0927221474','Di động',7),(6,'0968122547','Di động',3),(7,'092147474','Di động',8);
 /*!40000 ALTER TABLE `customer_telnumber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +332,7 @@ CREATE TABLE `customer_token` (
 
 LOCK TABLES `customer_token` WRITE;
 /*!40000 ALTER TABLE `customer_token` DISABLE KEYS */;
-INSERT INTO `customer_token` VALUES (1,'2beac4ea8ace2f1b170cdd0685fe281d2972e758fa2393d489f0758c04b2f944',3,'2020-10-28 08:44:03.686871'),(2,'a3d3dc5292981d33ca61651aa72b32793347a54220d3741f7569572df5bdf6e2',4,'2020-10-28 08:55:59.203436'),(5,'5c116d3415b33df503879f428b78421472faade892958758a44666386a11dcbe',7,'2020-10-28 08:57:41.311139');
+INSERT INTO `customer_token` VALUES (1,'78c96d7bc5a692655f92c24734a2f458b04653ed4d8f050dde66cae147478531',3,'2020-10-29 08:01:46.692431'),(2,'a3d3dc5292981d33ca61651aa72b32793347a54220d3741f7569572df5bdf6e2',4,'2020-10-28 08:55:59.203436'),(5,'5c116d3415b33df503879f428b78421472faade892958758a44666386a11dcbe',7,'2020-10-28 08:57:41.311139');
 /*!40000 ALTER TABLE `customer_token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,7 +445,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('92ie37g1fb7aca10mbq78aurscvocmli','.eJxVjEEOwiAQRe_C2pCBAqUu3fcMZDoMUjU0Ke3KeHdp0oVu33v_v0XAfcthr7yGOYqrUOLyyyakJ5dDxAeW-yJpKds6T_JI5GmrHJfIr9vZ_h1krLmtNQ1eARlib5KlARBiDxrZWwsqNeV671EntuyUIhMbBuo0WA2dc-LzBc-HNsM:1kXbo5:Sao6MugUeoRo-L4DoxN4p3w2fts7P0GVPbNbGaBYryw','2020-11-11 03:07:25.671697'),('dj99ac2xa76k93r320ov6npcwgzji7p7','.eJxVjEEOwiAQRe_C2pCBAqUu3fcMZDoMUjU0Ke3KeHdp0oVu33v_v0XAfcthr7yGOYqrUOLyyyakJ5dDxAeW-yJpKds6T_JI5GmrHJfIr9vZ_h1krLmtNQ1eARlib5KlARBiDxrZWwsqNeV671EntuyUIhMbBuo0WA2dc-LzBc-HNsM:1kWg6I:4Ya3Lz5xQJfp_LA4NBaMMtzsl4ijSqSbDrXmTNIrvFg','2020-11-08 13:30:22.181530');
+INSERT INTO `django_session` VALUES ('dj99ac2xa76k93r320ov6npcwgzji7p7','.eJxVjEEOwiAQRe_C2pCBAqUu3fcMZDoMUjU0Ke3KeHdp0oVu33v_v0XAfcthr7yGOYqrUOLyyyakJ5dDxAeW-yJpKds6T_JI5GmrHJfIr9vZ_h1krLmtNQ1eARlib5KlARBiDxrZWwsqNeV671EntuyUIhMbBuo0WA2dc-LzBc-HNsM:1kWg6I:4Ya3Lz5xQJfp_LA4NBaMMtzsl4ijSqSbDrXmTNIrvFg','2020-11-08 13:30:22.181530');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +463,7 @@ CREATE TABLE `order_cart` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `customer_id` (`customer_id`),
   CONSTRAINT `order_cart_customer_id_6237d072_fk_customer_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer_customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,7 +494,7 @@ CREATE TABLE `order_cartitem` (
   KEY `order_cartitem_product_id_ad323e40_fk_product_product_id` (`product_id`),
   CONSTRAINT `order_cartitem_cart_id_9b4c287a_fk_order_cart_id` FOREIGN KEY (`cart_id`) REFERENCES `order_cart` (`id`),
   CONSTRAINT `order_cartitem_product_id_ad323e40_fk_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product_product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -540,7 +540,7 @@ CREATE TABLE `order_order` (
   CONSTRAINT `order_order_payment_type_id_93f93be0_fk_order_paymentservice_id` FOREIGN KEY (`payment_type_id`) REFERENCES `order_paymentservice` (`id`),
   CONSTRAINT `order_order_ship_by_id_fe47631c_fk_order_shipservice_id` FOREIGN KEY (`ship_by_id`) REFERENCES `order_shipservice` (`id`),
   CONSTRAINT `order_order_ship_to_id_b22407ea_fk_customer_shipaddress_id` FOREIGN KEY (`ship_to_id`) REFERENCES `customer_shipaddress` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -549,6 +549,7 @@ CREATE TABLE `order_order` (
 
 LOCK TABLES `order_order` WRITE;
 /*!40000 ALTER TABLE `order_order` DISABLE KEYS */;
+INSERT INTO `order_order` VALUES (43,'2020-11-05 06:31:38.861081',NULL,NULL,0,'2020-10-29 06:31:38.861081','RETURN',NULL,3,1,1,3,89070000,89070000,6),(44,'2020-11-05 07:18:01.127846',NULL,NULL,0,'2020-10-29 07:18:01.127846','CANCEL',NULL,3,1,2,3,29690000,29690000,6),(45,'2020-11-05 07:28:09.137667',NULL,NULL,0,'2020-10-29 07:28:09.137667','RETURN',NULL,3,4,3,3,90970000,90970000,6),(46,'2020-11-05 07:48:49.430717',NULL,NULL,0,'2020-10-29 07:48:49.430717','CANCEL',NULL,3,4,3,3,62680000,62680000,6),(47,'2020-11-05 07:52:19.125687',NULL,NULL,0,'2020-10-29 07:52:19.125687','CANCEL',NULL,3,4,3,3,29690000,29690000,6),(48,'2020-11-05 07:53:39.664747','2020-10-29 07:53:39.664747','CEL10',27992000,'2020-10-29 07:53:39.664747','DONE',NULL,3,4,3,3,146958000,174950000,6);
 /*!40000 ALTER TABLE `order_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -573,7 +574,7 @@ CREATE TABLE `order_orderdetail` (
   KEY `order_orderdetail_product_id_76983dc0_fk_product_product_id` (`product_id`),
   CONSTRAINT `order_orderdetail_order_id_2c6526df_fk_order_order_id` FOREIGN KEY (`order_id`) REFERENCES `order_order` (`id`),
   CONSTRAINT `order_orderdetail_product_id_76983dc0_fk_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product_product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -582,6 +583,7 @@ CREATE TABLE `order_orderdetail` (
 
 LOCK TABLES `order_orderdetail` WRITE;
 /*!40000 ALTER TABLE `order_orderdetail` DISABLE KEYS */;
+INSERT INTO `order_orderdetail` VALUES (30,3,NULL,43,5,89070000,0,89070000),(31,1,NULL,44,5,29690000,0,29690000),(32,1,NULL,45,2,44990000,0,44990000),(33,2,NULL,45,3,45980000,0,45980000),(34,1,NULL,46,1,32990000,0,32990000),(35,1,NULL,46,5,29690000,0,29690000),(36,1,NULL,47,5,29690000,0,29690000),(37,5,'CEL10',48,4,174950000,0,174950000);
 /*!40000 ALTER TABLE `order_orderdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -778,7 +780,7 @@ CREATE TABLE `product_product` (
 
 LOCK TABLES `product_product` WRITE;
 /*!40000 ALTER TABLE `product_product` DISABLE KEYS */;
-INSERT INTO `product_product` VALUES (1,'Asus ROG Zephyrus M GU502GU AZ090T',32990000,0,1,NULL,1,1,20),(2,'Asus ROG Strix SCAR 15 G532L VAZ044T',44990000,0,1,NULL,1,1,15),(3,'Dell G3 Inspiron 3590 N5I5517W',22990000,0,1,NULL,1,2,30),(4,'Dell Inspiron G5 5590 N5590 4F4Y41',34990000,0,1,NULL,1,2,15),(5,'HP ENVY 13-aq1057TX',29690000,0,1,NULL,1,3,23),(6,'HP Pavilion 15-cs3008TU',13490000,0,1,NULL,1,3,24);
+INSERT INTO `product_product` VALUES (1,'Asus ROG Zephyrus M GU502GU AZ090T',32990000,0,1,NULL,1,1,20),(2,'Asus ROG Strix SCAR 15 G532L VAZ044T',44990000,0,1,NULL,1,1,15),(3,'Dell G3 Inspiron 3590 N5I5517W',22990000,0,1,NULL,1,2,30),(4,'Dell Inspiron G5 5590 N5590 4F4Y41',34990000,0,1,NULL,1,2,10),(5,'HP ENVY 13-aq1057TX',29690000,0,1,NULL,1,3,23),(6,'HP Pavilion 15-cs3008TU',13490000,0,1,NULL,1,3,24);
 /*!40000 ALTER TABLE `product_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -846,4 +848,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-28 17:17:21
+-- Dump completed on 2020-10-29 15:43:59

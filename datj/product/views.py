@@ -15,8 +15,6 @@ def index(request):
 
 
 class GetProductAPIView(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         list_product = Product.objects.all()
@@ -127,22 +125,22 @@ class GetProAttributeAPIView(APIView):
         mydata = GetProAttributeSerializer(list_product_attribute, many=True)
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
-    def post(self, request):
-        mydata = KeywordSerializer(data=request.data)
-        if not mydata.is_valid():
-            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
-
-        pk = mydata.data['pk']
-        keyword = mydata.data['keyword']
-        list_product_attribute = ProductAttribute.objects.all()
-
-        if pk != 0:
-            list_product_attribute = list_product_attribute.filter(pk=pk)
-        else:
-            list_product_attribute = list_product_attribute.filter(name__icontains=keyword)
-
-        mydata = GetManufacturerSerializer(list_product_attribute, many=True)
-        return Response(data=mydata.data, status=status.HTTP_200_OK)
+    # def post(self, request):
+    #     mydata = KeywordSerializer(data=request.data)
+    #     if not mydata.is_valid():
+    #         return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+    #
+    #     pk = mydata.data['pk']
+    #     keyword = mydata.data['keyword']
+    #     list_product_attribute = ProductAttribute.objects.all()
+    #
+    #     if pk != 0:
+    #         list_product_attribute = list_product_attribute.filter(pk=pk)
+    #     else:
+    #         list_product_attribute = list_product_attribute.filter(name__icontains=keyword)
+    #
+    #     mydata = GetManufacturerSerializer(list_product_attribute, many=True)
+    #     return Response(data=mydata.data, status=status.HTTP_200_OK)
 
 
 class GetProAttributeValueAPIView(APIView):
@@ -238,4 +236,3 @@ class GetDiscountItemAPIView(APIView):
         return Response(data=mydata.data, status=status.HTTP_200_OK)
 
 
-# Create your views here.

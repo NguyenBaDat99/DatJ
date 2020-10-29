@@ -38,6 +38,7 @@ urlpatterns = [
     path('order/get-order-detail/', GetCustomerOrderDetailAPIView.as_view()),
     path('order/add-customer-order/', AddCustomerOrderAPIView.as_view()),
     path('order/cancel-customer-order/', CancelCustomerOrderAPIView.as_view()),
+    path('order/return-customer-order/', ReturnCustomerOrderAPIView.as_view()),
     path('order/admin/ship-order/', AdminShipCustomerOrderAPIView.as_view()),
     path('order/admin/done-order/', AdminDoneCustomerOrderAPIView.as_view()),
     path('order/admin/cancel-order/', AdminCancelCustomerOrderAPIView.as_view()),

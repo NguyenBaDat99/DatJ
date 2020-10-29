@@ -25,10 +25,11 @@ class ShipService(models.Model):
 
 
 class OrderStage(models.TextChoices):
-    Processing = "Processing"
-    Shipping = "Shipping"
-    Done = "Done"
-    Cancel = "Cancel"
+    Processing = "PROCESSING"
+    Shipping = "SHIPPING"
+    Done = "DONE"
+    Cancel = "CANCEL"
+    Return = "RETURN"
 
 
 class Order(models.Model):

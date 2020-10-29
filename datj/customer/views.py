@@ -47,7 +47,8 @@ class SignUpCustomerAPIView(APIView):
             "name": customer.name,
             "email": customer.email,
             "gender": customer.gender,
-            "date_of_birth": customer.date_of_birth
+            "date_of_birth": customer.date_of_birth,
+            "tel_number": GetTelNumberSerializer(tel_number, many=True).data,
         }, status=status.HTTP_200_OK)
 
 
@@ -83,9 +84,9 @@ class SignInCustomerAPIView(APIView):
 
 class SignOutCustomerAPIView(APIView):
 
-    def post(self, request):
+    def put(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -111,7 +112,7 @@ class GetCustomerInfoAPIView(APIView):
 
     def get(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -143,9 +144,9 @@ class GetCustomerInfoAPIView(APIView):
 
 class EditCustomerAPIView(APIView):
 
-    def post(self, request):
+    def put(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -200,9 +201,9 @@ class EditCustomerAPIView(APIView):
 
 class ChangePasswordCustomerAPIView(APIView):
 
-    def post(self, request):
+    def put(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -247,7 +248,7 @@ class AddAddressAPIView(APIView):
 
     def post(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -281,9 +282,9 @@ class AddAddressAPIView(APIView):
 
 class EditAddressAPIView(APIView):
 
-    def post(self, request):
+    def put(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -343,9 +344,9 @@ class EditAddressAPIView(APIView):
 
 class DelAddressAPIView(APIView):
 
-    def post(self, request):
+    def delete(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -384,7 +385,7 @@ class AddTelNumberAPIView(APIView):
 
     def post(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -413,9 +414,10 @@ class AddTelNumberAPIView(APIView):
 
 
 class EditTelNumberAPIView(APIView):
-    def post(self, request):
+
+    def put(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -462,9 +464,10 @@ class EditTelNumberAPIView(APIView):
 
 
 class DelTelNumberAPIView(APIView):
-    def post(self, request):
+
+    def delete(self, request):
         try:
-            token = request.data['token']
+             token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"

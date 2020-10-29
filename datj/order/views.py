@@ -22,9 +22,9 @@ def index(request):
 
 class GetCartAPIView(APIView):
 
-    def post(self, request):
+    def get(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -38,7 +38,6 @@ class GetCartAPIView(APIView):
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
-
         customer = Customer.objects.filter(pk=token.customer.pk).first()
         cart = Cart.objects.filter(customer=customer).first()
         if cart is None:
@@ -56,7 +55,7 @@ class AddCartItemAPIView(APIView):
 
     def post(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -111,9 +110,9 @@ class AddCartItemAPIView(APIView):
 
 class DelCartItemAPIView(APIView):
 
-    def post(self, request):
+    def delete(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -162,7 +161,7 @@ class DelCartItemAPIView(APIView):
                 cart = Cart.objects.filter(pk=cart.pk).first()
                 CartItem.objects.filter(pk=cartItem.pk).update(quantity=cartItem.quantity - quantity,
                                                                unit_price=((
-                                                                                       cartItem.quantity - quantity) * product.price))
+                                                                                   cartItem.quantity - quantity) * product.price))
         cartItem = CartItem.objects.all().filter(cart=cart)
 
         return Response({
@@ -177,7 +176,8 @@ class GetCustomerOrderAPIView(APIView):
 
     def get(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
+            
         except:
             return Response({
                 "detail": "Token not found"
@@ -199,7 +199,8 @@ class GetCustomerOrderAPIView(APIView):
 
     def post(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
+            
         except:
             return Response({
                 "detail": "Token not found"
@@ -233,9 +234,10 @@ class GetCustomerOrderAPIView(APIView):
 
 class GetCustomerOrderDetailAPIView(APIView):
 
-    def post(self, request):
+    def get(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
+            
         except:
             return Response({
                 "detail": "Token not found"
@@ -283,7 +285,8 @@ class AddCustomerOrderAPIView(APIView):
 
     def post(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
+            
         except:
             return Response({
                 "detail": "Token not found"
@@ -397,7 +400,7 @@ class AddCustomerOrderAPIView(APIView):
                                            discount_code=discount.code,
                                            unit_price=item.unit_price,
                                            discount_amount=discount_amout,
-                                           unit_actual_price=item.unit_price - discount_amout,)
+                                           unit_actual_price=item.unit_price - discount_amout, )
                 total_discount += discount_amout
             else:
                 OrderDetail.objects.create(order=order,
@@ -406,7 +409,7 @@ class AddCustomerOrderAPIView(APIView):
                                            discount_code=discount,
                                            unit_price=item.unit_price,
                                            discount_amount=0,
-                                           unit_actual_price=item.unit_price,)
+                                           unit_actual_price=item.unit_price, )
 
         if not discount is None and discount.on_bill:
             total_discount = discount.discount_percent * total_price
@@ -436,15 +439,16 @@ class AddCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "stage": order.stage,
             "description": order.description,
-            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
         }, status=status.HTTP_200_OK)
 
 
 class CancelCustomerOrderAPIView(APIView):
 
-    def post(self, request):
+    def put(self, request):
         try:
-            token = request.data['token']
+            token = request.headers['Authorization']
+            
         except:
             return Response({
                 "detail": "Token not found"
@@ -499,6 +503,68 @@ class CancelCustomerOrderAPIView(APIView):
             "total_actual_price": order.total_actual_price,
             "order_date": order.order_date,
             "description": order.description,
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
+        }, status=status.HTTP_200_OK)
+
+
+class ReturnCustomerOrderAPIView(APIView):
+
+    def put(self, request):
+        try:
+            token = request.headers['Authorization']
+            
+        except:
+            return Response({
+                "detail": "Token not found"
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        token = Token.objects.filter(key=token).first()
+        if token is None:
+            return Response({
+                "detail": "Invalid token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Token has expired"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        customer = Customer.objects.filter(pk=token.customer.pk).first()
+        order = request.data['order']
+        order = Order.objects.filter(pk=order, customer=customer).first()
+        if order is None:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if order.stage != OrderStage.Done:
+            return Response({
+                "detail": "Can't RETURN order! Your ORDER stage: " + order.stage
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        order.stage = OrderStage.Return
+        order.paid_date = None
+        order.save()
+
+        order_detail = OrderDetail.objects.filter(order=order)
+        for item in order_detail:
+            product = Product.objects.filter(pk=item.product.pk).first()
+            product.unit_in_stock += item.quantity
+            product.save()
+
+        return Response({
+            "stage": order.stage,
+            "customer": order.customer.username,
+            "payment_type": order.payment_type.name,
+            "ship_by": order.ship_by.name,
+            "ship_to": str(order.ship_to),
+            "shipped_date": order.shipped_date,
+            "contact_tel": order.contact_tel.__str__(),
+            "paid_date": order.paid_date,
+            "discount_code": order.discount_code,
+            "total_discount": order.total_discount,
+            "total_price": order.total_price,
+            "total_actual_price": order.total_actual_price,
+            "order_date": order.order_date,
+            "description": order.description,
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
         }, status=status.HTTP_200_OK)
 
 
@@ -506,7 +572,7 @@ class AdminShipCustomerOrderAPIView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def put(self, request):
         mydata = ChangeStageOrderSerializer(data=request.data)
         if not mydata.is_valid():
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
@@ -554,7 +620,7 @@ class AdminDoneCustomerOrderAPIView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def put(self, request):
         mydata = ChangeStageOrderSerializer(data=request.data)
         if not mydata.is_valid():
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
@@ -599,7 +665,7 @@ class AdminCancelCustomerOrderAPIView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def put(self, request):
         mydata = ChangeStageOrderSerializer(data=request.data)
         if not mydata.is_valid():
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
