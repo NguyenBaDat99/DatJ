@@ -35,7 +35,7 @@ class ProductAttributeAdmin(admin.ModelAdmin):
 class ProductAttributeValueAdmin(admin.ModelAdmin):
     list_per_page = 12
     search_fields = ('value',)
-    list_filter = ('product', 'product_attribute',)
+    list_filter = ('product_attribute', 'product',)
 
 
 class DiscountItemInline(admin.TabularInline):
