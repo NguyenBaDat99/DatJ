@@ -50,6 +50,8 @@ urlpatterns = [
     path('customer/get-customer-info/', GetCustomerInfoAPIView.as_view()),
     path('customer/edit-customer/', EditCustomerAPIView.as_view()),
     path('customer/change-password-customer/', ChangePasswordCustomerAPIView.as_view()),
+    path('customer/request-restore-password/', RequestRestorePasswordAPIView.as_view()),
+    path('customer/change-password-otp/', ChangePasswordOTPAPIView.as_view()),
     path('customer/add-address/', AddAddressAPIView.as_view()),
     path('customer/edit-address/', EditAddressAPIView.as_view()),
     path('customer/del-address/', DelAddressAPIView.as_view()),

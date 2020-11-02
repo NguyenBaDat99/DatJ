@@ -10,11 +10,12 @@ class Gender(models.TextChoices):
     FEMALE = 2
     OTHER = 3
 
+
 class Customer(models.Model):
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=255)
     name = models.CharField(max_length=50)
-    email = models.CharField(max_length=100, null=True, blank=True)
+    email = models.CharField(max_length=100)
     gender = models.CharField(max_length=10, choices=Gender.choices, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
 
@@ -51,3 +52,15 @@ class Token(models.Model):
 
     def __str__(self):
         return self.key
+
+
+class OTPCode(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    code = models.CharField(max_length=20)
+    created = models.DateTimeField(default=datetime.now())
+
+    def __str__(self):
+        return self.code
+
+
+

@@ -1,13 +1,17 @@
 from datetime import timedelta, timezone
 
+from django.conf import settings
 from django.shortcuts import render
+from django.core.mail import send_mail
 from django.http import HttpResponse
+
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
 
 from customer.models import Token, Customer, ShipAddress, TelNumber
 from product.models import Product, Discount, DiscountItem
@@ -438,7 +442,7 @@ class AddCustomerOrderAPIView(APIView):
         cart.delete()
         cart_item.delete()
 
-        return Response({
+        content = {
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
             "ship_by": order.ship_by.name,
@@ -454,7 +458,15 @@ class AddCustomerOrderAPIView(APIView):
             "stage": order.stage,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
-        }, status=status.HTTP_200_OK)
+        }
+        send_mail(
+            "DATJ: Order successful! Your ORDER ID: " + str(order.pk),
+            "Order Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class CancelCustomerOrderAPIView(APIView):
@@ -505,7 +517,7 @@ class CancelCustomerOrderAPIView(APIView):
             product.unit_in_order -= item.quantity
             product.save()
 
-        return Response({
+        content = {
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -521,7 +533,16 @@ class CancelCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
-        }, status=status.HTTP_200_OK)
+        }
+        send_mail(
+            "DATJ: Cancel ORDER successful! Your ORDER ID: " + str(order.pk),
+            "Order Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class ReturnCustomerOrderAPIView(APIView):
@@ -569,7 +590,7 @@ class ReturnCustomerOrderAPIView(APIView):
             product.unit_in_stock += item.quantity
             product.save()
 
-        return Response({
+        content = {
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -585,7 +606,16 @@ class ReturnCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
-        }, status=status.HTTP_200_OK)
+        }
+        send_mail(
+            "DATJ: Return ORDER successful! Your ORDER ID: " + str(order.pk),
+            "Order Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class AdminShipCustomerOrderAPIView(APIView):
@@ -617,7 +647,8 @@ class AdminShipCustomerOrderAPIView(APIView):
             product.unit_in_stock -= item.quantity
             product.save()
 
-        return Response({
+        customer = Customer.objects.filter(pk=order.customer.pk).first()
+        content = {
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -633,7 +664,16 @@ class AdminShipCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
-        }, status=status.HTTP_200_OK)
+        }
+        send_mail(
+            "DATJ: Your ORDER is SHIPPING! Your ORDER ID: " + str(order.pk),
+            "Order Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class AdminDoneCustomerOrderAPIView(APIView):
@@ -662,7 +702,8 @@ class AdminDoneCustomerOrderAPIView(APIView):
         order.save()
         order_detail = OrderDetail.objects.filter(order=order)
 
-        return Response({
+        customer = Customer.objects.filter(pk=order.customer.pk).first()
+        content = {
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -678,7 +719,16 @@ class AdminDoneCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
-        }, status=status.HTTP_200_OK)
+        }
+        send_mail(
+            "DATJ: Your ORDER has DONE! Your ORDER ID: " + str(order.pk),
+            "Thank you for choosing us!\nOrder Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class AdminCancelCustomerOrderAPIView(APIView):
@@ -714,7 +764,8 @@ class AdminCancelCustomerOrderAPIView(APIView):
         order.paid_date = None
         order.save()
 
-        return Response({
+        customer = Customer.objects.filter(pk=order.customer.pk).first()
+        content = {
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -730,4 +781,13 @@ class AdminCancelCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
-        }, status=status.HTTP_200_OK)
+        }
+        send_mail(
+            "DATJ: Your ORDER has CANCELED! Your ORDER ID: " + str(order.pk),
+            "Sorry for this inconvenient!\nOrder Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response(content, status=status.HTTP_200_OK)

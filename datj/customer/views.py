@@ -1,8 +1,11 @@
 import hashlib
+import random
+import string
 from datetime import datetime, timezone, timedelta
 
-
+from django.conf import settings
 from django.http import HttpResponse
+from django.core.mail import send_mail
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -22,7 +25,9 @@ class SignUpCustomerAPIView(APIView):
     def post(self, request):
         mydata = SignUpCustomerSerializer(data=request.data)
         if not mydata.is_valid():
-            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "detail": "Something wrong! Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         username = mydata.data['username']
         password = mydata.data['password']
@@ -36,6 +41,8 @@ class SignUpCustomerAPIView(APIView):
         list_customer = Customer.objects.all()
         if list_customer.filter(username=username):
             return Response('Username already exists! Try another', status=status.HTTP_400_BAD_REQUEST)
+        if list_customer.filter(email=email):
+            return Response('Email already sign up! Try another or login', status=status.HTTP_400_BAD_REQUEST)
 
         password = hashlib.sha256(password.strip().encode("utf-8")).hexdigest()
         date_of_birth = datetime.strptime(date_of_birth, '%d-%m-%Y')
@@ -57,7 +64,9 @@ class SignInCustomerAPIView(APIView):
     def post(self, request):
         mydata = SignInCustomerSerializer(data=request.data)
         if not mydata.is_valid():
-            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "detail": "Something wrong! Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         username = mydata.data['username']
         password = mydata.data['password']
@@ -86,7 +95,7 @@ class SignOutCustomerAPIView(APIView):
 
     def put(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -112,7 +121,7 @@ class GetCustomerInfoAPIView(APIView):
 
     def get(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -146,7 +155,7 @@ class EditCustomerAPIView(APIView):
 
     def put(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -170,6 +179,12 @@ class EditCustomerAPIView(APIView):
         except:
             return Response({
                 "detail": "Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        list_customer = Customer.objects.all()
+        if list_customer.filter(email=email):
+            return Response({
+                "detail": "Email already exists! Try another"
             }, status=status.HTTP_400_BAD_REQUEST)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
@@ -203,7 +218,7 @@ class ChangePasswordCustomerAPIView(APIView):
 
     def put(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -220,7 +235,9 @@ class ChangePasswordCustomerAPIView(APIView):
 
         data = ChangePasswordCutomerSerializer(data=request.data)
         if not data.is_valid():
-            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "detail": "Something wrong! Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         old_password = data.data['old_password']
         new_password = data.data['new_password']
@@ -244,11 +261,78 @@ class ChangePasswordCustomerAPIView(APIView):
         return Response({"Change password successfully!"}, status=status.HTTP_200_OK)
 
 
+class RequestRestorePasswordAPIView(APIView):
+
+    def post(self, request):
+        try:
+            email = request.data['email']
+        except:
+            return Response({
+                "detail": "Something wrong! Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        customer = Customer.objects.filter(email=email).first()
+        if customer is None:
+            return Response({
+                "detail": "Invalid email!"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            otpCode = OTPCode.objects.filter(customer=customer).first()
+            letters_and_digits = string.ascii_letters + string.digits
+            code = ''.join((random.choice(letters_and_digits) for i in range(6)))
+            if otpCode is None:
+                otpCode = OTPCode.objects.create(code=code, created=datetime.now(), customer=customer)
+            else:
+                OTPCode.objects.filter(pk=otpCode.pk).update(code=code, created=datetime.now())
+                otpCode = OTPCode.objects.filter(pk=otpCode.pk).first()
+
+            content = "Use this code to restore your password: " + code + "\nThis code will expired in 5 minutes"
+            send_mail(
+                'DATJ: Reset password code',
+                content,
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+            return Response('Mail successfully sent', status=status.HTTP_200_OK)
+
+
+class ChangePasswordOTPAPIView(APIView):
+
+    def put(self, request):
+        try:
+            code = request.data['code']
+            password = request.data['password']
+            password_confirm = request.data['password_confirm']
+        except:
+            return Response({
+                "detail": "Something wrong! Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        otpCode = OTPCode.objects.filter(code=code).first()
+        if otpCode is None or (otpCode.created + timedelta(minutes=5)) < datetime.now(timezone.utc):
+            return Response({
+                "detail": "Your OTP code is invalid"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            if password != password_confirm:
+                return Response({
+                    "detail": "Password doesn't match!"
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            OTPCode.objects.filter(pk=otpCode.pk).update(created=(datetime.now() - timedelta(minutes=5)))
+            customer = Customer.objects.filter(pk=otpCode.customer.pk).first()
+            password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+            customer.password = password
+            customer.save()
+            return Response({"Change password successfully!"}, status=status.HTTP_200_OK)
+
+
 class AddAddressAPIView(APIView):
 
     def post(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -265,7 +349,9 @@ class AddAddressAPIView(APIView):
 
         data = AddAddressSerializer(data=request.data)
         if not data.is_valid():
-            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "detail": "Something wrong! Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
         address = ShipAddress.objects.create(apartment_number=data.data['apartment_number'],
@@ -284,7 +370,7 @@ class EditAddressAPIView(APIView):
 
     def put(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -346,7 +432,7 @@ class DelAddressAPIView(APIView):
 
     def delete(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -385,7 +471,7 @@ class AddTelNumberAPIView(APIView):
 
     def post(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -402,7 +488,9 @@ class AddTelNumberAPIView(APIView):
 
         data = AddTelNumberSerializer(data=request.data)
         if not data.is_valid():
-            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                "detail": "Something wrong! Check your data"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
         tel_number = TelNumber.objects.create(tel_number=data.data['tel_number'],
@@ -417,7 +505,7 @@ class EditTelNumberAPIView(APIView):
 
     def put(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -467,7 +555,7 @@ class DelTelNumberAPIView(APIView):
 
     def delete(self, request):
         try:
-             token = request.headers['Authorization']
+            token = request.headers['Authorization']
         except:
             return Response({
                 "detail": "Token not found"
@@ -500,5 +588,3 @@ class DelTelNumberAPIView(APIView):
         return Response({
             "detail": "Delete tel number successfully"
         }, status=status.HTTP_200_OK)
-
-
