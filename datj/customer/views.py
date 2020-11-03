@@ -37,6 +37,12 @@ class SignUpCustomerAPIView(APIView):
         date_of_birth = mydata.data['date_of_birth']
         tel_number = mydata.data['tel_number']
         number_type = mydata.data['number_type']
+        try:
+            date_of_birth = datetime.strptime(date_of_birth, '%d-%m-%Y')
+        except:
+            return Response({
+                "detail": "Wrong date of birth!"
+            }, status=status.HTTP_400_BAD_REQUEST)
 
         list_customer = Customer.objects.all()
         if list_customer.filter(username=username):
@@ -45,10 +51,10 @@ class SignUpCustomerAPIView(APIView):
             return Response('Email already sign up! Try another or login', status=status.HTTP_400_BAD_REQUEST)
 
         password = hashlib.sha256(password.strip().encode("utf-8")).hexdigest()
-        date_of_birth = datetime.strptime(date_of_birth, '%d-%m-%Y')
         customer = Customer.objects.create(username=username, password=password, name=name, email=email,
                                            gender=gender, date_of_birth=date_of_birth)
         TelNumber.objects.create(customer=customer, tel_number=tel_number, number_type=number_type)
+        tel_number = TelNumber.objects.filter(customer=customer)
         return Response({
             "username": customer.username,
             "name": customer.name,

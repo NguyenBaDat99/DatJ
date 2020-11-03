@@ -6,6 +6,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_per_page = 12
     list_filter = ('stage', 'order_date', 'shipped_date', 'paid_date', 'ship_by', 'payment_type',
                    'discount_code', 'customer',)
+    list_display = ('__str__', 'stage', 'paid_date',)
+    list_editable = ('stage', 'paid_date',)
 
 
 class OrderDetailAdmin(admin.ModelAdmin):
