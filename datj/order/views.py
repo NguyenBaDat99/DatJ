@@ -79,14 +79,19 @@ class AddCartItemAPIView(APIView):
         except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        if quantity <= 0:
+        try:
+            if quantity <= 0:
+                return Response({
+                    "detail": "Invalid quantiy"
+                }, status=status.HTTP_400_BAD_REQUEST)
+            product = Product.objects.filter(pk=product).first()
+            if product is None:
+                return Response({
+                    "detail": "Invalid product"
+                }, status=status.HTTP_400_BAD_REQUEST)
+        except:
             return Response({
-                "detail": "Invalid quantiy"
-            }, status=status.HTTP_400_BAD_REQUEST)
-        product = Product.objects.filter(pk=product).first()
-        if product is None:
-            return Response({
-                "detail": "Invalid product"
+                "detail": "Product and quantiy must be a number"
             }, status=status.HTTP_400_BAD_REQUEST)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
@@ -139,14 +144,19 @@ class DelCartItemAPIView(APIView):
         except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        if quantity <= 0:
+        try:
+            if quantity <= 0:
+                return Response({
+                    "detail": "Invalid quantiy"
+                }, status=status.HTTP_400_BAD_REQUEST)
+            product = Product.objects.filter(pk=product).first()
+            if product is None:
+                return Response({
+                    "detail": "Invalid product"
+                }, status=status.HTTP_400_BAD_REQUEST)
+        except:
             return Response({
-                "detail": "Invalid quantiy"
-            }, status=status.HTTP_400_BAD_REQUEST)
-        product = Product.objects.filter(pk=product).first()
-        if product is None:
-            return Response({
-                "detail": "Invalid product"
+                "detail": "Product and quantiy must be a number"
             }, status=status.HTTP_400_BAD_REQUEST)
 
         customer = Customer.objects.filter(pk=token.customer.pk).first()
@@ -266,13 +276,18 @@ class GetCustomerOrderDetailAPIView(APIView):
         except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        customer = Customer.objects.filter(pk=token.customer.pk).first()
-        order = Order.objects.filter(pk=order, customer=customer).first()
-        if order is None:
+        try:
+            customer = Customer.objects.filter(pk=token.customer.pk).first()
+            order = Order.objects.filter(pk=order, customer=customer).first()
+        except:
             return Response({
                 "detail": "Invalid Order ID"
             }, status=status.HTTP_400_BAD_REQUEST)
 
+        if order is None:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
         order_detail = OrderDetail.objects.filter(order=order)
 
         return Response({
@@ -321,13 +336,12 @@ class AddCustomerOrderAPIView(APIView):
                 "detail": "Your cart is empty!"
             }, status=status.HTTP_400_BAD_REQUEST)
         try:
-            payment_type = request.data['payment_type']
-            ship_by = request.data['ship_by']
-            ship_to = request.data['ship_to']
-            contact_tel = request.data['contact_tel']
+            payment_type = int(request.data['payment_type'])
+            ship_by = int(request.data['ship_by'])
+            ship_to = int(request.data['ship_to'])
+            contact_tel = int(request.data['contact_tel'])
             discount_code = request.data['discount_code']
             description = request.data['description']
-
         except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
@@ -351,10 +365,6 @@ class AddCustomerOrderAPIView(APIView):
         if payment_type is None:
             return Response({
                 "detail": "Invalid PAYMENT SERVICES"
-            }, status=status.HTTP_400_BAD_REQUEST)
-        if ship_to is None:
-            return Response({
-                "detail": "Invalid SHIP ADDRESS"
             }, status=status.HTTP_400_BAD_REQUEST)
         if ship_to is None:
             return Response({
@@ -474,7 +484,6 @@ class CancelCustomerOrderAPIView(APIView):
     def put(self, request):
         try:
             token = request.headers['Authorization']
-
         except:
             return Response({
                 "detail": "Token not found"
@@ -493,8 +502,14 @@ class CancelCustomerOrderAPIView(APIView):
         except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        customer = Customer.objects.filter(pk=token.customer.pk).first()
-        order = Order.objects.filter(pk=order, customer=customer).first()
+        try:
+            customer = Customer.objects.filter(pk=token.customer.pk).first()
+            order = Order.objects.filter(pk=order, customer=customer).first()
+        except:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         if order is None:
             return Response({
                 "detail": "Invalid Order ID"
@@ -569,8 +584,14 @@ class ReturnCustomerOrderAPIView(APIView):
         except:
             return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
 
-        customer = Customer.objects.filter(pk=token.customer.pk).first()
-        order = Order.objects.filter(pk=order, customer=customer).first()
+        try:
+            customer = Customer.objects.filter(pk=token.customer.pk).first()
+            order = Order.objects.filter(pk=order, customer=customer).first()
+        except:
+            return Response({
+                "detail": "Invalid Order ID"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         if order is None:
             return Response({
                 "detail": "Invalid Order ID"
