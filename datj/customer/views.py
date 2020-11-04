@@ -207,7 +207,12 @@ class EditCustomerAPIView(APIView):
         if not gender is None:
             customer.gender = gender
         if not date_of_birth is None:
-            date_of_birth = datetime.strptime(date_of_birth, '%d-%m-%Y')
+            try:
+                date_of_birth = datetime.strptime(date_of_birth, '%d-%m-%Y')
+            except:
+                return Response({
+                    "detail": "Wrong date of birth!"
+                }, status=status.HTTP_400_BAD_REQUEST)
             customer.date_of_birth = date_of_birth
 
         customer.save()
