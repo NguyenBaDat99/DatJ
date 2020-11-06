@@ -34,6 +34,8 @@ urlpatterns = [
     path('order/get-cart/', GetCartAPIView.as_view()),
     path('order/add-cart-item/', AddCartItemAPIView.as_view()),
     path('order/del-cart-item/', DelCartItemAPIView.as_view()),
+    path('order/get-payment-service/', GetPaymentServiceAPIView.as_view()),
+    path('order/get-ship-service/', GetShipServiceAPIView.as_view()),
     path('order/get-order/', GetCustomerOrderAPIView.as_view()),
     path('order/get-order-detail/', GetCustomerOrderDetailAPIView.as_view()),
     path('order/add-customer-order/', AddCustomerOrderAPIView.as_view()),

@@ -22,6 +22,12 @@ class GetOrderDetailSerializer(serializers.ModelSerializer):
                   'unit_price', 'discount_amount', 'unit_actual_price',)
 
 
+class GetServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentService
+        fields = ('pk', 'name', 'active')
+
+
 class ChangeStageOrderSerializer(serializers.Serializer):
     order = serializers.IntegerField(default=0)
 

@@ -12,7 +12,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-
 from customer.models import Token, Customer, ShipAddress, TelNumber
 from product.models import Product, Discount, DiscountItem
 
@@ -22,6 +21,34 @@ from .serializers import *
 
 def index(request):
     return HttpResponse("Welcome to order site.")
+
+
+def renderMailOrderDetail(order_detail):
+    result = "\n\n\n\tOrder Detail:"
+    for item in order_detail:
+        result += "\n\n\t\tProduct: " + str(item.product) + \
+                    "\n\t\tQuantity: " + str(item.quantity) + \
+                    "\n\t\tDiscount code: " + str(item.discount_code) + \
+                    "\n\t\tUnit price: " + str(item.unit_price) + \
+                    "\n\t\tDiscount amount: " + str(item.discount_amount) + \
+                    "\n\t\tUnit actual price: " + str(item.unit_actual_price)
+    return result
+
+
+def renderMailOrder(order):
+    result = "\tCustomer: " + str(order.customer.username) + \
+              "\n\tPayment type: " + order.payment_type.name + \
+              "\n\tShip service: " + order.ship_by.name + \
+              "\n\tShip to: " + str(order.ship_to) + \
+              "\n\tContact tel: " + str(order.contact_tel) + \
+              "\n\tPaid date: " + str(order.paid_date) + \
+              "\n\tDiscount code: " + str(order.discount_code) + \
+              "\n\tTotal discount: " + str(order.total_discount) + \
+              "\n\tTotal price: " + str(order.total_price) + \
+              "\n\tTotal actual price: " + str(order.total_actual_price) + \
+              "\n\tOrder date: " + str(order.order_date) + \
+              "\n\tStage: " + order.stage
+    return result
 
 
 class GetCartAPIView(APIView):
@@ -38,7 +65,7 @@ class GetCartAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -69,7 +96,7 @@ class AddCartItemAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -134,7 +161,7 @@ class DelCartItemAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -192,6 +219,44 @@ class DelCartItemAPIView(APIView):
         }, status=status.HTTP_200_OK)
 
 
+class GetPaymentServiceAPIView(APIView):
+
+    def get(self, request):
+        list_payment = PaymentService.objects.all()
+
+        mydata = GetServiceSerializer(list_payment, many=True)
+        return Response(data=mydata.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        try:
+            pk = request.data['pk']
+            list_payment = PaymentService.objects.filter(pk=pk)
+        except:
+            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+
+        mydata = GetServiceSerializer(list_payment, many=True)
+        return Response(data=mydata.data, status=status.HTTP_200_OK)
+
+
+class GetShipServiceAPIView(APIView):
+
+    def get(self, request):
+        list_shipper = ShipService.objects.all()
+
+        mydata = GetServiceSerializer(list_shipper, many=True)
+        return Response(data=mydata.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        try:
+            pk = request.data['pk']
+            list_shipper = ShipService.objects.filter(pk=pk)
+        except:
+            return Response('Something wrong! Check your data', status=status.HTTP_400_BAD_REQUEST)
+
+        mydata = GetServiceSerializer(list_shipper, many=True)
+        return Response(data=mydata.data, status=status.HTTP_200_OK)
+
+
 class GetCustomerOrderAPIView(APIView):
 
     def get(self, request):
@@ -207,7 +272,7 @@ class GetCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -230,7 +295,7 @@ class GetCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -267,7 +332,7 @@ class GetCustomerOrderDetailAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -324,7 +389,7 @@ class AddCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -452,7 +517,15 @@ class AddCustomerOrderAPIView(APIView):
         cart.delete()
         cart_item.delete()
 
-        content = {
+        content = renderMailOrder(order) + renderMailOrderDetail(order_detail)
+        send_mail(
+            "DATJ: Order successful! Your ORDER ID: " + str(order.pk),
+            "Order information: \n" + content,
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+        return Response({
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
             "ship_by": order.ship_by.name,
@@ -468,15 +541,7 @@ class AddCustomerOrderAPIView(APIView):
             "stage": order.stage,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
-        }
-        send_mail(
-            "DATJ: Order successful! Your ORDER ID: " + str(order.pk),
-            "Order Detail: \n" + str(content),
-            settings.EMAIL_HOST_USER,
-            [customer.email],
-            fail_silently=False,
-        )
-        return Response(content, status=status.HTTP_200_OK)
+        }, status=status.HTTP_200_OK)
 
 
 class CancelCustomerOrderAPIView(APIView):
@@ -493,7 +558,7 @@ class CancelCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -518,7 +583,7 @@ class CancelCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Can't CANCEL order! Your ORDER stage: " + order.stage
             }, status=status.HTTP_400_BAD_REQUEST)
-        if not order.paid_date is None and order.paid_date < datetime.now(timezone.utc):
+        if not order.paid_date is None and order.paid_date < datetime.now():
             return Response({
                 "detail": "ORDER have PAID (" + str(order.paid_date) + "), can't REFUND or CANCEL"
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -532,7 +597,16 @@ class CancelCustomerOrderAPIView(APIView):
             product.unit_in_order -= item.quantity
             product.save()
 
-        content = {
+        content = renderMailOrder(order) + renderMailOrderDetail(order_detail)
+        send_mail(
+            "DATJ: Cancel ORDER successful! Your ORDER ID: " + str(order.pk),
+            "Order Detail: \n" + content,
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response({
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -548,16 +622,7 @@ class CancelCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
-        }
-        send_mail(
-            "DATJ: Cancel ORDER successful! Your ORDER ID: " + str(order.pk),
-            "Order Detail: \n" + str(content),
-            settings.EMAIL_HOST_USER,
-            [customer.email],
-            fail_silently=False,
-        )
-
-        return Response(content, status=status.HTTP_200_OK)
+        }, status=status.HTTP_200_OK)
 
 
 class ReturnCustomerOrderAPIView(APIView):
@@ -575,7 +640,7 @@ class ReturnCustomerOrderAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -611,7 +676,16 @@ class ReturnCustomerOrderAPIView(APIView):
             product.unit_in_stock += item.quantity
             product.save()
 
-        content = {
+        content = renderMailOrder(order) + renderMailOrderDetail(order_detail)
+        send_mail(
+            "DATJ: Return ORDER successful! Your ORDER ID: " + str(order.pk),
+            "Order Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response({
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -627,16 +701,7 @@ class ReturnCustomerOrderAPIView(APIView):
             "order_date": order.order_date,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
-        }
-        send_mail(
-            "DATJ: Return ORDER successful! Your ORDER ID: " + str(order.pk),
-            "Order Detail: \n" + str(content),
-            settings.EMAIL_HOST_USER,
-            [customer.email],
-            fail_silently=False,
-        )
-
-        return Response(content, status=status.HTTP_200_OK)
+        }, status=status.HTTP_200_OK)
 
 
 class AdminShipCustomerOrderAPIView(APIView):
@@ -669,7 +734,17 @@ class AdminShipCustomerOrderAPIView(APIView):
             product.save()
 
         customer = Customer.objects.filter(pk=order.customer.pk).first()
-        content = {
+
+        content = renderMailOrder(order) + renderMailOrderDetail(order_detail)
+        send_mail(
+            "DATJ: Your ORDER is SHIPPING! Your ORDER ID: " + str(order.pk),
+            "Order Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response({
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -684,17 +759,8 @@ class AdminShipCustomerOrderAPIView(APIView):
             "total_actual_price": order.total_actual_price,
             "order_date": order.order_date,
             "description": order.description,
-            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
-        }
-        send_mail(
-            "DATJ: Your ORDER is SHIPPING! Your ORDER ID: " + str(order.pk),
-            "Order Detail: \n" + str(content),
-            settings.EMAIL_HOST_USER,
-            [customer.email],
-            fail_silently=False,
-        )
-
-        return Response(content, status=status.HTTP_200_OK)
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
+        }, status=status.HTTP_200_OK)
 
 
 class AdminDoneCustomerOrderAPIView(APIView):
@@ -724,7 +790,17 @@ class AdminDoneCustomerOrderAPIView(APIView):
         order_detail = OrderDetail.objects.filter(order=order)
 
         customer = Customer.objects.filter(pk=order.customer.pk).first()
-        content = {
+
+        content = renderMailOrder(order) + renderMailOrderDetail(order_detail)
+        send_mail(
+            "DATJ: Your ORDER has DONE! Your ORDER ID: " + str(order.pk),
+            "Thank you for choosing us!\nOrder Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response({
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -739,17 +815,8 @@ class AdminDoneCustomerOrderAPIView(APIView):
             "total_actual_price": order.total_actual_price,
             "order_date": order.order_date,
             "description": order.description,
-            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
-        }
-        send_mail(
-            "DATJ: Your ORDER has DONE! Your ORDER ID: " + str(order.pk),
-            "Thank you for choosing us!\nOrder Detail: \n" + str(content),
-            settings.EMAIL_HOST_USER,
-            [customer.email],
-            fail_silently=False,
-        )
-
-        return Response(content, status=status.HTTP_200_OK)
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
+        }, status=status.HTTP_200_OK)
 
 
 class AdminCancelCustomerOrderAPIView(APIView):
@@ -786,7 +853,17 @@ class AdminCancelCustomerOrderAPIView(APIView):
         order.save()
 
         customer = Customer.objects.filter(pk=order.customer.pk).first()
-        content = {
+
+        content = renderMailOrder(order) + renderMailOrderDetail(order_detail)
+        send_mail(
+            "DATJ: Your ORDER has CANCELED! Your ORDER ID: " + str(order.pk),
+            "Sorry for this inconvenient!\nOrder Detail: \n" + str(content),
+            settings.EMAIL_HOST_USER,
+            [customer.email],
+            fail_silently=False,
+        )
+
+        return Response({
             "stage": order.stage,
             "customer": order.customer.username,
             "payment_type": order.payment_type.name,
@@ -801,14 +878,5 @@ class AdminCancelCustomerOrderAPIView(APIView):
             "total_actual_price": order.total_actual_price,
             "order_date": order.order_date,
             "description": order.description,
-            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data
-        }
-        send_mail(
-            "DATJ: Your ORDER has CANCELED! Your ORDER ID: " + str(order.pk),
-            "Sorry for this inconvenient!\nOrder Detail: \n" + str(content),
-            settings.EMAIL_HOST_USER,
-            [customer.email],
-            fail_silently=False,
-        )
-
-        return Response(content, status=status.HTTP_200_OK)
+            "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
+        }, status=status.HTTP_200_OK)

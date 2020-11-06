@@ -111,7 +111,7 @@ class SignOutCustomerAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired! You already sign out"
             }, status=status.HTTP_200_OK)
@@ -137,7 +137,7 @@ class GetCustomerInfoAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -171,7 +171,7 @@ class EditCustomerAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -239,7 +239,7 @@ class ChangePasswordCustomerAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -321,7 +321,7 @@ class ChangePasswordOTPAPIView(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         otpCode = OTPCode.objects.filter(code=code).first()
-        if otpCode is None or (otpCode.created + timedelta(minutes=5)) < datetime.now(timezone.utc):
+        if otpCode is None or (otpCode.created + timedelta(minutes=5)) < datetime.now():
             return Response({
                 "detail": "Your OTP code is invalid"
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -353,7 +353,7 @@ class AddAddressAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -391,7 +391,7 @@ class EditAddressAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -453,7 +453,7 @@ class DelAddressAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -492,7 +492,7 @@ class AddTelNumberAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -526,7 +526,7 @@ class EditTelNumberAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
@@ -576,7 +576,7 @@ class DelTelNumberAPIView(APIView):
             return Response({
                 "detail": "Invalid token"
             }, status=status.HTTP_401_UNAUTHORIZED)
-        if (token.created + timedelta(hours=1)) < datetime.now(timezone.utc):
+        if (token.created + timedelta(hours=1)) < datetime.now():
             return Response({
                 "detail": "Token has expired"
             }, status=status.HTTP_401_UNAUTHORIZED)
