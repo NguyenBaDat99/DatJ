@@ -483,7 +483,7 @@ class AddCustomerOrderAPIView(APIView):
 
         cart_item = CartItem.objects.filter(cart=cart)
         for item in cart_item:
-            if not discount is None and \
+            if discount and \
                     not discount.on_bill and \
                     DiscountItem.objects.filter(discount=discount, product=item.product):
                 discount_amount = item.quantity * item.unit_price * discount.discount_percent
