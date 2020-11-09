@@ -541,7 +541,7 @@ class AddCustomerOrderAPIView(APIView):
             "stage": order.stage,
             "description": order.description,
             "order_detail": GetOrderDetailSerializer(order_detail, many=True).data,
-        }, status=status.HTTP_200_OK)
+        }, status=status.HTTP_201_CREATED)
 
 
 class CancelCustomerOrderAPIView(APIView):

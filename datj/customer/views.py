@@ -62,7 +62,7 @@ class SignUpCustomerAPIView(APIView):
             "gender": customer.gender,
             "date_of_birth": customer.date_of_birth,
             "tel_number": GetTelNumberSerializer(tel_number, many=True).data,
-        }, status=status.HTTP_200_OK)
+        }, status=status.HTTP_201_CREATED)
 
 
 class SignInCustomerAPIView(APIView):
@@ -374,7 +374,7 @@ class AddAddressAPIView(APIView):
                                              customer=customer)
         return Response({
             "detail": "Add new ship address successful"
-        }, status=status.HTTP_200_OK)
+        }, status=status.HTTP_201_CREATED)
 
 
 class EditAddressAPIView(APIView):
@@ -509,7 +509,7 @@ class AddTelNumberAPIView(APIView):
                                               customer=customer)
         return Response({
             "detail": "Add new tel number successful"
-        }, status=status.HTTP_200_OK)
+        }, status=status.HTTP_201_CREATED)
 
 
 class EditTelNumberAPIView(APIView):
