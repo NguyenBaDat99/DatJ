@@ -19,4 +19,5 @@ simplejson==3.17.2
 sqlparse==0.4.1
 uritemplate==3.0.1
 urllib3==1.25.11
-mysqlclient @ file:mysqlclient-1.4.6-cp38-cp38-win32.whl
+
+mysqlclient @ file:///DatJ/mysqlclient-1.4.6-cp38-cp38-win32.whl
